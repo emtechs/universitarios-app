@@ -1,18 +1,15 @@
-import { Navigate } from 'react-router-dom'
 import { Box, Container, Grid } from '@mui/material'
 import { HomePageAdmin } from './Admin'
-import { School, User } from './components'
+import { Data, Documents, Result, User } from './components'
 import { useAppThemeContext, useAuthContext, Header } from '../../shared'
 
-interface iHomePageProps {
+interface iAuthHomePageProps {
   isHome?: boolean
 }
 
-export const OldHomePage = ({ isHome }: iHomePageProps) => {
+export const AuthHomePage = ({ isHome }: iAuthHomePageProps) => {
   const { theme, mdDown } = useAppThemeContext()
-  const { isAuthenticated, userProfile } = useAuthContext()
-
-  if (!isAuthenticated) return <Navigate to="/login" />
+  const { userProfile } = useAuthContext()
 
   if (userProfile?.role === 'ADMIN' && !isHome) return <HomePageAdmin />
 
@@ -26,8 +23,10 @@ export const OldHomePage = ({ isHome }: iHomePageProps) => {
             direction={mdDown ? 'column' : 'row'}
             spacing={mdDown ? 2 : 5}
           >
-            <School />
+            <Documents />
+            <Data />
             <User />
+            <Result />
           </Grid>
         </Container>
       </Box>

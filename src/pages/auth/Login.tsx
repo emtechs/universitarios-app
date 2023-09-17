@@ -26,7 +26,7 @@ export const Login = () => {
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(!open)
 
-  if (isAuthenticated) return <Navigate to="/" />
+  if (isAuthenticated) return <Navigate to="/home" />
 
   return (
     <>

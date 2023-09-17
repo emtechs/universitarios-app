@@ -3,5 +3,5 @@ import { useAuthContext } from '../../contexts'
 
 export const ProtectedAdmin = () => {
   const { dashData } = useAuthContext()
-  return dashData === 'ADMIN' ? <Outlet /> : <Navigate replace to="/" />
+  return dashData === 'ADMIN' ? <Outlet /> : <Navigate replace to="/home" />
 }

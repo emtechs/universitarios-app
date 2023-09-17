@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react'
 import { Box, Divider, Grid, Paper, Typography } from '@mui/material'
-import { AccountBox, Today, WavingHand } from '@mui/icons-material'
+import { AccountBox, Today } from '@mui/icons-material'
 import {
   ChildrenLoading,
   DialogEditPassword,
   DialogEditProfile,
   apiUser,
-  iPeriod,
   iUser,
 } from '../../../shared'
 import dayjs from 'dayjs'
@@ -16,17 +15,13 @@ dayjs.extend(localizedFormat)
 
 export const User = () => {
   const [userData, setUserData] = useState<iUser>()
-  const [periodsData, setPeriodsData] = useState<iPeriod[]>()
   const [loading, setLoading] = useState(false)
 
   const getUser = () => {
     setLoading(true)
     apiUser
       .page(`?date=${dayjs().format('DD/MM/YYYY')}`)
-      .then((res) => {
-        setUserData(res.user)
-        setPeriodsData(res.periods)
-      })
+      .then((res) => setUserData(res.user))
       .finally(() => setLoading(false))
   }
 
@@ -53,7 +48,7 @@ export const User = () => {
               gap={1}
             >
               <Today />
-              Período
+              Referência
             </Typography>
           </Box>
           <Divider />
@@ -66,39 +61,22 @@ export const User = () => {
             >
               {dayjs().format('dddd, LL')}
             </Typography>
-            <Grid container px={2}>
-              <Grid
-                item
-                xs={6}
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-              >
-                <WavingHand fontSize="large" />
-              </Grid>
-              <Grid item xs={6}>
-                <Typography variant="subtitle2" textAlign="right">
-                  {
-                    periodsData
-                      ?.filter((el) => el.category === 'BIMESTRE')
-                      ?.at(0)?.name
-                  }
-                </Typography>
-                <Typography variant="subtitle2" textAlign="right">
-                  {
-                    periodsData
-                      ?.filter((el) => el.category === 'SEMESTRE')
-                      ?.at(0)?.name
-                  }
-                </Typography>
-                <Typography variant="subtitle2" textAlign="right">
-                  {
-                    periodsData?.filter((el) => el.category === 'ANO')?.at(0)
-                      ?.name
-                  }
-                </Typography>
-              </Grid>
-            </Grid>
+            <Typography
+              variant="h6"
+              textAlign="center"
+              fontWeight="bolder"
+              mb={1}
+            >
+              2023.2
+            </Typography>
+            <Typography
+              variant="subtitle1"
+              textAlign="center"
+              fontWeight="bolder"
+              mb={1}
+            >
+              CONFIRMADO
+            </Typography>
           </Box>
         </Box>
         <Box mb={2} component={Paper}>
