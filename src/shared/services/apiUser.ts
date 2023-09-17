@@ -39,7 +39,7 @@ const retrieve = async (id: string, query: string): Promise<iUser> => {
 
 interface iPageReturn {
   user: iUser
-  periods: iPeriod[]
+  period: iPeriod
 }
 
 const page = async (query: string): Promise<iPageReturn> => {

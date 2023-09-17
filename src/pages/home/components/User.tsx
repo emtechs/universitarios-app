@@ -6,6 +6,7 @@ import {
   DialogEditPassword,
   DialogEditProfile,
   apiUser,
+  iPeriod,
   iUser,
 } from '../../../shared'
 import dayjs from 'dayjs'
@@ -15,13 +16,17 @@ dayjs.extend(localizedFormat)
 
 export const User = () => {
   const [userData, setUserData] = useState<iUser>()
+  const [periodData, setPeriodData] = useState<iPeriod>()
   const [loading, setLoading] = useState(false)
 
   const getUser = () => {
     setLoading(true)
     apiUser
       .page(`?date=${dayjs().format('DD/MM/YYYY')}`)
-      .then((res) => setUserData(res.user))
+      .then((res) => {
+        setUserData(res.user)
+        setPeriodData(res.period)
+      })
       .finally(() => setLoading(false))
   }
 
@@ -52,29 +57,22 @@ export const User = () => {
             </Typography>
           </Box>
           <Divider />
-          <Box p={1}>
-            <Typography
-              variant="subtitle2"
-              textAlign="center"
-              fontWeight="bolder"
-              mb={1}
-            >
+          <Box
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            p={1}
+            gap={1}
+          >
+            <Typography variant="subtitle2" fontWeight="bolder">
               {dayjs().format('dddd, LL')}
             </Typography>
-            <Typography
-              variant="h6"
-              textAlign="center"
-              fontWeight="bolder"
-              mb={1}
-            >
-              2023.2
-            </Typography>
-            <Typography
-              variant="subtitle1"
-              textAlign="center"
-              fontWeight="bolder"
-              mb={1}
-            >
+            <ChildrenLoading isLoading={loading}>
+              <Typography variant="h6" fontWeight="bolder">
+                {periodData?.name}
+              </Typography>
+            </ChildrenLoading>
+            <Typography variant="subtitle1" fontWeight="bolder">
               CONFIRMADO
             </Typography>
           </Box>
