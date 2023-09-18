@@ -61,7 +61,7 @@ export const EditProfilePage = () => {
       setLoading(true)
       const dataImage = new FormData()
       if (data.avatar) dataImage.append('image', data.avatar)
-      await apiImage.createUser(dataImage)
+      await apiImage.create(dataImage, '', '')
       handleSucess('Foto alterada com sucesso')
       getUser()
     } catch {

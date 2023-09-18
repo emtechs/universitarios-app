@@ -12,12 +12,12 @@ import {
   Typography,
 } from '@mui/material'
 import {
-  Cancel,
+  // Cancel,
   CheckCircle,
   ExpandMore,
   Pending,
   PermMedia,
-  Sync,
+  // Sync,
 } from '@mui/icons-material'
 import { useAppThemeContext } from '../../../shared'
 
@@ -64,65 +64,6 @@ export const Documents = () => {
             </AccordionSummary>
             <AccordionDetails>
               <Tooltip title="Alterar foto">
-                <IconButton size="small">
-                  <Avatar sx={{ width: '150px', height: '150px' }} />
-                </IconButton>
-              </Tooltip>
-            </AccordionDetails>
-          </Accordion>
-          <Accordion>
-            <AccordionSummary expandIcon={<ExpandMore />}>
-              <Typography
-                component="div"
-                variant="subtitle1"
-                display="flex"
-                alignItems="center"
-                gap={1}
-              >
-                <Tooltip title="Documento invalidado">
-                  <Cancel color="error" />
-                </Tooltip>
-                Documento de Identificação
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Box display="flex" gap={1}>
-                <Box>
-                  <Tooltip title="Alterar Documento de Identificação - Frente">
-                    <IconButton size="small">
-                      <Avatar sx={{ width: '150px', height: '150px' }} />
-                    </IconButton>
-                  </Tooltip>
-                  <Typography textAlign="center">Frente</Typography>
-                </Box>
-                <Box>
-                  <Tooltip title="Alterar Documento de Identificação - Verso">
-                    <IconButton size="small">
-                      <Avatar sx={{ width: '150px', height: '150px' }} />
-                    </IconButton>
-                  </Tooltip>
-                  <Typography textAlign="center">Verso</Typography>
-                </Box>
-              </Box>
-            </AccordionDetails>
-          </Accordion>
-          <Accordion>
-            <AccordionSummary expandIcon={<ExpandMore />}>
-              <Typography
-                component="div"
-                variant="subtitle1"
-                display="flex"
-                alignItems="center"
-                gap={1}
-              >
-                <Tooltip title="Documento em análise">
-                  <Sync color="warning" />
-                </Tooltip>
-                Comprovante de Endereço
-              </Typography>
-            </AccordionSummary>
-            <AccordionDetails>
-              <Tooltip title="Alterar Comprovante de Endereço">
                 <IconButton size="small">
                   <Avatar sx={{ width: '150px', height: '150px' }} />
                 </IconButton>

@@ -67,7 +67,7 @@ export const AuthProvider = ({ children }: iChildren) => {
   const refreshUser = useCallback(() => {
     setLoading(true)
     apiUser
-      .refresh()
+      .refresh(`?date=${dayjs().format('DD/MM/YYYY')}`)
       .then((res) => setUserProfile(res))
       .finally(() => setLoading(false))
   }, [])
@@ -76,11 +76,10 @@ export const AuthProvider = ({ children }: iChildren) => {
     if (accessToken) {
       setLoading(true)
       apiUser
-        .profile(accessToken)
+        .profile(accessToken, `?date=${dayjs().format('DD/MM/YYYY')}`)
         .then((res) => {
           apiUsingNow.defaults.headers.authorization = `Bearer ${accessToken}`
           setUserProfile(res)
-          setDashData(res.dash)
         })
         .catch(() => {
           localStorage.removeItem('@EMTechs:token')

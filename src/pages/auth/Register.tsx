@@ -20,6 +20,10 @@ import {
   InputFile,
   apiImage,
 } from '../../shared'
+import dayjs from 'dayjs'
+import localizedFormat from 'dayjs/plugin/localizedFormat'
+import 'dayjs/locale/pt-br'
+dayjs.extend(localizedFormat)
 
 export const Register = () => {
   const navigate = useNavigate()
@@ -35,10 +39,13 @@ export const Register = () => {
   const create = async (data: iRegisterRequest) => {
     try {
       setLoading(true)
-      const user = await apiAuth.register(data)
+      const user = await apiAuth.register(
+        data,
+        `?date=${dayjs().format('DD/MM/YYYY')}`,
+      )
       const dataImage = new FormData()
       if (data.avatar) dataImage.append('image', data.avatar)
-      await apiImage.create(dataImage, user.id)
+      await apiImage.create(dataImage, user.id, '?category=FT')
       handleSucess(
         'Cadastro realizado com sucesso. Faça login no sistema utilizando seu CPF e a senha cadastrada.',
       )

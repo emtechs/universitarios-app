@@ -26,7 +26,7 @@ export const AutoCompleteSchool = ({
   return (
     <AutocompleteElement
       name="school"
-      label="Escola"
+      label="Instituição de Ensino"
       required
       multiple={isMultiple}
       loading={loading}
@@ -36,7 +36,8 @@ export const AutoCompleteSchool = ({
           : [
               {
                 id: 1,
-                label: 'No momento, não há nenhuma escola cadastrada',
+                label:
+                  'No momento, não há nenhuma instituição de ensino cadastrada',
               },
             ]
       }

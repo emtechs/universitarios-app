@@ -49,9 +49,9 @@ const page = async (query: string): Promise<iPageReturn> => {
   return response
 }
 
-const profile = async (token: string): Promise<iUserProfile> => {
+const profile = async (token: string, query: string): Promise<iUserProfile> => {
   const { data: response } = await apiUsingNow.get<iUserProfile>(
-    'users/profile',
+    `users/profile${query}`,
     {
       headers: { Authorization: `Bearer ${token}` },
     },
@@ -59,9 +59,10 @@ const profile = async (token: string): Promise<iUserProfile> => {
   return response
 }
 
-const refresh = async (): Promise<iUserProfile> => {
-  const { data: response } =
-    await apiUsingNow.get<iUserProfile>('users/profile')
+const refresh = async (query: string): Promise<iUserProfile> => {
+  const { data: response } = await apiUsingNow.get<iUserProfile>(
+    `users/profile${query}`,
+  )
   return response
 }
 

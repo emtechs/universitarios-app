@@ -18,9 +18,12 @@ const login = async (data: iLoginRequest): Promise<iLoginResponse> => {
   return response
 }
 
-const register = async (data: iRegisterRequest): Promise<iUserProfile> => {
+const register = async (
+  data: iRegisterRequest,
+  query: string,
+): Promise<iUserProfile> => {
   const { data: response } = await apiUsingNow.post<iUserProfile>(
-    'login/register',
+    `login/register${query}`,
     data,
   )
   return response

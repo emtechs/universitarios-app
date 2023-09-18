@@ -24,6 +24,10 @@ export interface iUserProfile {
     url: string
   }
   requests: number
+  period_id: string
+  is_open: boolean
+  is_pending: boolean
+  key: string
 }
 
 export interface iUser extends iUserProfile {
