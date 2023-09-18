@@ -1,5 +1,9 @@
 import { z } from 'zod'
-import { studentRemoveSchema, studentTransferSchema } from '../schemas'
+import {
+  recordUpdateSchema,
+  studentRemoveSchema,
+  studentTransferSchema,
+} from '../schemas'
 import { iClass, iClassFreq } from './class.interfaces'
 
 export interface iStudent {
@@ -60,3 +64,5 @@ export interface iStudentDash extends iStudentFrequency {
 export type iStudentRemoveRequest = z.infer<typeof studentRemoveSchema>
 
 export type iStudentTransferRequest = z.infer<typeof studentTransferSchema>
+
+export type iRecordUpdateRequest = z.infer<typeof recordUpdateSchema>

@@ -11,7 +11,8 @@ export const First = ({ children }: iChildren) => {
 
     if (userProfile.role !== 'ADMIN') {
       if (!userProfile.is_open) return <></>
-      if (userProfile.is_open && userProfile.is_pending) return <Pending />
+      if (userProfile.is_open && userProfile.is_pending)
+        return <Pending id={userProfile.id} key_record={userProfile.key} />
       if (
         userProfile.is_open &&
         !userProfile.is_pending &&

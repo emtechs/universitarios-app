@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { imageSchema } from './file.schema'
 
 export const studentSchema = z.object({
   name: z
@@ -8,6 +9,26 @@ export const studentSchema = z.object({
     .string({ required_error: 'Matricula obrigatória' })
     .nonempty('Matricula obrigatória'),
 })
+
+export const recordUpdateSchema = z
+  .object({
+    avatar: imageSchema,
+    course: z
+      .string({ required_error: 'Curso obrigatório' })
+      .nonempty('Curso obrigatório'),
+    semester: z
+      .number({ required_error: 'Semestre obrigatório' })
+      .gte(1, 'Semestre obrigatório'),
+    shift: z.enum(['MORNING', 'AFTERNOON', 'NIGHT', 'FULL'], {
+      required_error: 'Turno obrigatório',
+    }),
+    school: z.object(
+      { id: z.string().uuid() },
+      { required_error: 'Instituição de Ensino obrigatório' },
+    ),
+    school_id: z.string().uuid().optional(),
+  })
+  .refine((fields) => (fields.school_id = fields.school.id))
 
 export const studentRemoveSchema = z
   .object({

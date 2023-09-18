@@ -43,6 +43,17 @@ const updateInfreq = async (data: FieldValues): Promise<iStudent> => {
   return response
 }
 
+const updateRecord = async (
+  data: FieldValues,
+  key: string,
+): Promise<iStudent> => {
+  const { data: response } = await apiUsingNow.patch<iStudent>(
+    `students/record/${key}`,
+    data,
+  )
+  return response
+}
+
 const impStudent = async (
   data: FormData,
   class_id: string,
@@ -63,4 +74,5 @@ export const apiStudent = {
   impStudentAll,
   list,
   listClass,
+  updateRecord,
 }
