@@ -9,7 +9,7 @@ import {
   TableRow,
   Tooltip,
 } from '@mui/material'
-import { usePaginationContext } from '../../../../shared/contexts'
+import { useParamsContext } from '../../../../shared/contexts'
 import { Visibility } from '@mui/icons-material'
 import { Link as RouterLink } from 'react-router-dom'
 
@@ -18,7 +18,12 @@ interface iTableClassProps {
 }
 
 export const TableClass = ({ data }: iTableClassProps) => {
-  const { isLoading, onClickReset } = usePaginationContext()
+  const { isLoading, onClickReset, handleBack, back } = useParamsContext()
+
+  const onClickDetail = () => {
+    handleBack(back, '/class')
+    onClickReset()
+  }
 
   const headCells: iHeadCell[] = useMemo(() => {
     return [
@@ -44,7 +49,7 @@ export const TableClass = ({ data }: iTableClassProps) => {
                 color="inherit"
                 component={RouterLink}
                 to={`/class/${el.id}`}
-                onClick={onClickReset}
+                onClick={onClickDetail}
               >
                 {el.name}
               </Link>
@@ -68,7 +73,7 @@ export const TableClass = ({ data }: iTableClassProps) => {
                 size="small"
                 component={RouterLink}
                 to={`/class/${el.id}`}
-                onClick={onClickReset}
+                onClick={onClickDetail}
               >
                 <Visibility fontSize="small" />
               </IconButton>

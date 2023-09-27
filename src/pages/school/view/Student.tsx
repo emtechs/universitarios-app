@@ -26,6 +26,7 @@ import {
   DialogRemoveStudent,
   DialogTransferStudent,
   useCalendarContext,
+  useParamsContext,
 } from '../../../shared'
 import { TableSchoolStudentPage } from '../components'
 
@@ -33,17 +34,9 @@ export const ViewSchoolStudentPage = () => {
   const { school_id } = useParams()
   const { debounce } = useDebounce()
   const { listYear } = useCalendarContext()
-  const {
-    setCount,
-    setIsLoading,
-    search,
-    order,
-    by,
-    setFace,
-    query_page,
-    handleFace,
-    face,
-  } = usePaginationContext()
+  const { setIsLoading, search, order, by } = useParamsContext()
+  const { setCount, setFace, query_page, handleFace, face } =
+    usePaginationContext()
   const [listData, setListData] = useState<iStudent[]>([])
   const [index, setIndex] = useState(0)
   const [studentData, setStudentData] = useState<iStudent>()
@@ -127,16 +120,7 @@ export const ViewSchoolStudentPage = () => {
             />
           </TitleBaseItemsPage>
         }
-        tools={
-          <Tools
-            back="/school"
-            isNew
-            titleNew="Aluno"
-            isDash
-            isSearch
-            isReset
-          />
-        }
+        tools={<Tools isBack isNew titleNew="Aluno" isDash isSearch isReset />}
       >
         <TabsSchoolRetrievePage value="student" />
         <Box display="flex" justifyContent="space-between">

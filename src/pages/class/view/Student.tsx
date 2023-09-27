@@ -14,7 +14,7 @@ import {
   Footer,
   DialogRemoveStudent,
   DialogTransferStudent,
-  useSchoolContext,
+  useParamsContext,
 } from '../../../shared'
 import {
   DialogClassStudentPage,
@@ -25,8 +25,8 @@ import {
 export const ViewClassStudentPage = () => {
   const { view: key } = useParams()
   const { debounce } = useDebounce()
-  const { schoolSelect } = useSchoolContext()
-  const { setCount, setIsLoading, search, order, by } = usePaginationContext()
+  const { setCount } = usePaginationContext()
+  const { setIsLoading, search, order, by } = useParamsContext()
   const [listData, setListData] = useState<iStudent[]>([])
   const [studentData, setStudentData] = useState<iStudent>()
 
@@ -89,14 +89,7 @@ export const ViewClassStudentPage = () => {
             <LabelClass />
           </TitleBaseItemsPage>
         }
-        tools={
-          <Tools
-            back={`/school/${schoolSelect?.id}`}
-            isNew
-            titleNew="Aluno"
-            isSearch
-          />
-        }
+        tools={<Tools isBack isNew titleNew="Aluno" isSearch />}
       >
         <TabsClassKeyPage value="student" />
         <TableClassStudentPage data={data} handleStudent={handleStudent} />

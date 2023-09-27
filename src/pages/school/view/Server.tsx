@@ -14,13 +14,15 @@ import {
   Footer,
   DialogCreateServer,
   useDebounce,
+  useParamsContext,
 } from '../../../shared'
 import { TableSchoolServerPage } from '../components'
 
 export const ViewSchoolServerPage = () => {
   const { school_id } = useParams()
   const { debounce } = useDebounce()
-  const { setIsLoading, setCount, search } = usePaginationContext()
+  const { setCount } = usePaginationContext()
+  const { setIsLoading, search } = useParamsContext()
   const [listData, setListData] = useState<iSchoolUser[]>([])
 
   const getServer = useCallback(
@@ -65,7 +67,7 @@ export const ViewSchoolServerPage = () => {
         }
         tools={
           <Tools
-            back="/school"
+            isBack
             iconNew={<PersonAdd />}
             isNew
             titleNew="Servidor"

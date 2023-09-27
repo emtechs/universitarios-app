@@ -6,19 +6,22 @@ import {
   useMemo,
   useState,
 } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { AxiosError } from 'axios'
 import {
-  iChildren,
-  iDash,
+  iRecoveryRequest,
   iLoginRequest,
   iRecoveryPasswordRequest,
-  iRecoveryRequest,
   iUserProfile,
+  iDash,
   iYear,
-} from '../interfaces'
-import { useNavigate } from 'react-router-dom'
-import { useAppThemeContext } from './ThemeContext'
-import { apiAuth, apiCalendar, apiUser, apiUsingNow } from '../services'
-import { AxiosError } from 'axios'
+  iChildren,
+  useAppThemeContext,
+  apiUser,
+  apiUsingNow,
+  apiCalendar,
+  apiAuth,
+} from '../../shared'
 import dayjs from 'dayjs'
 import localizedFormat from 'dayjs/plugin/localizedFormat'
 import 'dayjs/locale/pt-br'
@@ -80,7 +83,7 @@ export const AuthProvider = ({ children }: iChildren) => {
         .then((res) => {
           apiUsingNow.defaults.headers.authorization = `Bearer ${accessToken}`
           setUserProfile(res)
-        })
+                  })
         .catch(() => {
           localStorage.removeItem('@EMTechs:token')
           setAccessToken(undefined)

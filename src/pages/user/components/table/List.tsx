@@ -4,13 +4,13 @@ import { TableRow, TableCell } from '@mui/material'
 import {
   iUser,
   useAppThemeContext,
-  usePaginationContext,
   iHeadCell,
   TableBase,
   LinkText,
   TableCellDataLoading,
   rolePtBr,
   ActionsActive,
+  useParamsContext,
 } from '../../../../shared'
 
 interface iTableUserPageProps {
@@ -23,7 +23,13 @@ export const TableUserPage = ({
   listData,
 }: iTableUserPageProps) => {
   const { mdDown } = useAppThemeContext()
-  const { order, by, isLoading, onClickReset } = usePaginationContext()
+  const { order, by, isLoading, onClickReset, handleBack, back } =
+    useParamsContext()
+
+  const onClickDetail = () => {
+    handleBack(back, '/user')
+    onClickReset()
+  }
 
   const data = useMemo(() => {
     return sortArray<iUser>(listData, { by: order, order: by })
@@ -61,7 +67,7 @@ export const TableUserPage = ({
                   label={name}
                   width={250}
                   to={to}
-                  onClick={onClickReset}
+                  onClick={onClickDetail}
                 />
               ) : (
                 name
@@ -79,6 +85,7 @@ export const TableUserPage = ({
               handleData={handleData}
               is_active={is_active}
               to={to}
+              back="/user"
               role={role}
             />
           </TableRow>

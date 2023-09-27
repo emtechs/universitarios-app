@@ -10,7 +10,6 @@ import {
 } from '@mui/material'
 import {
   AddBox,
-  ArrowBack,
   ClearAll,
   Dashboard,
   ManageAccountsOutlined,
@@ -21,14 +20,20 @@ import {
   useAppThemeContext,
   useDialogContext,
   useDrawerContext,
-  usePaginationContext,
   useSchoolContext,
-} from '../../contexts'
-import { ActiveButton, CompBase, HomeButton, UserTools } from './components'
-import { ButtonDest } from '../button'
+  useParamsContext,
+  ButtonDest,
+} from '../../../shared'
+import {
+  HomeButton,
+  CompBase,
+  UserTools,
+  ActiveButton,
+  BackButton,
+} from './components'
 
 interface iToolsProps {
-  back?: string
+  isBack?: boolean
   isHome?: boolean
   toHome?: string
   isUser?: boolean
@@ -47,7 +52,7 @@ interface iToolsProps {
 }
 
 export const Tools = ({
-  back,
+  isBack,
   isHome,
   toHome = '/',
   isUser,
@@ -77,7 +82,7 @@ export const Tools = ({
     search,
     setSearch,
     selected,
-  } = usePaginationContext()
+  } = useParamsContext()
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
@@ -121,9 +126,7 @@ export const Tools = ({
       paddingX={2}
       component={Paper}
     >
-      {back && (
-        <ButtonDest to={back} title="Voltar" startIcon={<ArrowBack />} isResp />
-      )}
+      {isBack && <BackButton />}
       {isHome && <HomeButton to={toHome} />}
       {isNew && (
         <CompBase
