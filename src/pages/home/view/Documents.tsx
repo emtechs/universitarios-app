@@ -15,7 +15,7 @@ export const Documents = () => {
   const [ftData, setFtData] = useState<iDocument>()
   const [mtData, setMtData] = useState<iDocument>()
 
-  const getUser = () => {
+  const getDocs = () => {
     if (userProfile)
       apiUser.documents(userProfile.record_id).then((res) => {
         setFtData(res.foto)
@@ -24,7 +24,7 @@ export const Documents = () => {
   }
 
   useEffect(() => {
-    getUser()
+    getDocs()
   }, [])
 
   return (
@@ -50,10 +50,11 @@ export const Documents = () => {
         </Box>
         <Divider />
         <Box p={1}>
-          <DisplayImage document={ftData} title="Foto" />
+          <DisplayImage document={ftData} title="Foto" getDocs={getDocs} />
           <DisplayImage
             document={mtData}
             title="Declaração da Instituição de Ensino ou Atestado de Matrícula"
+            getDocs={getDocs}
           />
         </Box>
       </Box>

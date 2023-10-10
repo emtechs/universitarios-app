@@ -15,10 +15,15 @@ import { DialogImage } from './DialogImage'
 
 interface iDisplayImageProps {
   title: string
+  getDocs: () => void
   document?: iDocument
 }
 
-export const DisplayImage = ({ document, title }: iDisplayImageProps) => {
+export const DisplayImage = ({
+  document,
+  getDocs,
+  title,
+}: iDisplayImageProps) => {
   const { defineIconStatus } = useIconStatus()
   const [open, setOpen] = useState(false)
   const onClose = () => setOpen((old) => !old)
@@ -57,6 +62,7 @@ export const DisplayImage = ({ document, title }: iDisplayImageProps) => {
       <DialogImage
         open={open}
         onClose={onClose}
+        getDocs={getDocs}
         title={title}
         document={document}
       />

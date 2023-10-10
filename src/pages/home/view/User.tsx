@@ -78,7 +78,7 @@ export const User = () => {
               </Typography>
             </ChildrenLoading>
             <Typography variant="subtitle1" fontWeight="bolder">
-              {statusPtBr(userData?.status)}
+              {statusPtBr(userData?.status).toUpperCase()}
             </Typography>
           </Box>
         </Box>

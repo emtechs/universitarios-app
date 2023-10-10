@@ -17,12 +17,14 @@ interface iDialogImageProps {
   title: string
   open: boolean
   onClose: () => void
+  getDocs: () => void
   document?: iDocument
 }
 
 export const DialogImage = ({
   onClose,
   open,
+  getDocs,
   title,
   document,
 }: iDialogImageProps) => {
@@ -30,14 +32,16 @@ export const DialogImage = ({
   const [openImage, setOpenImage] = useState(false)
   const onCloseImage = () => setOpenImage((old) => !old)
 
-  const updateImage = async (data: iAvatarRequest) => {
+  const updateImage = async (id: string, data: iAvatarRequest) => {
     try {
       onCloseImage()
+      onClose()
       setLoading(true)
       const dataImage = new FormData()
       if (data.avatar) dataImage.append('image', data.avatar)
-      await apiImage.createUser(dataImage)
+      await apiImage.update(id, dataImage)
       handleSucess('Foto alterada com sucesso')
+      getDocs()
     } catch {
       handleError('Não foi possível atualizar a foto no momento!')
     } finally {
@@ -67,24 +71,26 @@ export const DialogImage = ({
           <img src={document?.image.url} alt={title} />
         </DialogBaseChildren>
       )}
-      <DialogBaseChildren
-        open={openImage}
-        onClose={onCloseImage}
-        description=""
-        title={`Alterar ${title}`}
-      >
-        <FormContainer
-          onSuccess={updateImage}
-          resolver={zodResolver(avatarSchema)}
+      {document && (
+        <DialogBaseChildren
+          open={openImage}
+          onClose={onCloseImage}
+          description=""
+          title={`Alterar ${title}`}
         >
-          <Box display="flex" flexDirection="column" gap={2}>
-            <InputFile label="Foto de Perfil" />
-            <Button variant="contained" type="submit">
-              Salvar
-            </Button>
-          </Box>
-        </FormContainer>
-      </DialogBaseChildren>
+          <FormContainer
+            onSuccess={(data) => updateImage(document.image.id, data)}
+            resolver={zodResolver(avatarSchema)}
+          >
+            <Box display="flex" flexDirection="column" gap={2}>
+              <InputFile label={title} />
+              <Button variant="contained" type="submit">
+                Salvar
+              </Button>
+            </Box>
+          </FormContainer>
+        </DialogBaseChildren>
+      )}
     </>
   )
 }

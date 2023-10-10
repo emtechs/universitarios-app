@@ -12,4 +12,8 @@ const createUser = async (data: FormData): Promise<void> => {
   await apiUsingNow.post('images/user', data)
 }
 
-export const apiImage = { create, createUser }
+const update = async (id: string, data: FormData): Promise<void> => {
+  await apiUsingNow.patch(`images/${id}`, data)
+}
+
+export const apiImage = { create, createUser, update }
