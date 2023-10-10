@@ -1,24 +1,18 @@
 import { useState } from 'react'
+import { useAuthContext } from '../../shared/contexts'
+import { BasePage, BoxResp, Glossary } from '../../shared/components'
 import { FormContainer, PasswordElement } from 'react-hook-form-mui'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { passwordRecoverySchema } from '../../shared/schemas'
 import { Button, IconButton } from '@mui/material'
 import { Info } from '@mui/icons-material'
-import { Navigate, useParams } from 'react-router-dom'
-import {
-  useAuthContext,
-  BasePage,
-  passwordRecoverySchema,
-  BoxResp,
-  Glossary,
-} from '../../shared'
+import { useParams } from 'react-router-dom'
 
 export const PasswordPage = () => {
   const { userId, token } = useParams()
-  const { isAuthenticated, recoveryPassword } = useAuthContext()
+  const { recoveryPassword } = useAuthContext()
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(!open)
-
-  if (isAuthenticated) return <Navigate to="/home" />
 
   return (
     <>

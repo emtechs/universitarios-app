@@ -3,7 +3,7 @@ import { Info, Login } from '@mui/icons-material'
 import { IconButton, Button } from '@mui/material'
 import { useState } from 'react'
 import { FormContainer, TextFieldElement } from 'react-hook-form-mui'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import {
   useAuthContext,
   BasePage,
@@ -14,16 +14,23 @@ import {
   iAuthRequest,
   useAppThemeContext,
   apiAuth,
+  ProtectedAuthChildren,
 } from '../../shared'
+import { HomePage } from '../home'
 
-export const HomePage = () => {
+export const HomeAuthPage = () => {
   const navigate = useNavigate()
   const { setLoading, handleSucess, handleError } = useAppThemeContext()
   const { isAuthenticated } = useAuthContext()
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(!open)
 
-  if (isAuthenticated) return <Navigate to="/home" />
+  if (isAuthenticated)
+    return (
+      <ProtectedAuthChildren>
+        <HomePage />
+      </ProtectedAuthChildren>
+    )
 
   const verifyCpf = async (data: iAuthRequest) => {
     try {

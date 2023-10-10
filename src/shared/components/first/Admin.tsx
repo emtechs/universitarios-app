@@ -1,28 +1,28 @@
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Info } from '@mui/icons-material'
 import { useState } from 'react'
-import { IconButton, Button } from '@mui/material'
 import {
   FormContainer,
-  TextFieldElement,
   PasswordElement,
+  TextFieldElement,
 } from 'react-hook-form-mui'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Button, IconButton } from '@mui/material'
+import { Info } from '@mui/icons-material'
 import {
+  useAppThemeContext,
+  useAuthContext,
+  iUserFirstRequest,
+  apiUser,
+  userFirstSchema,
   BasePage,
   BoxResp,
   Glossary,
-  apiUser,
-  iUserFirstRequest,
-  useAppThemeContext,
-  useAuthContext,
-  userFirstSchema,
 } from '../../../shared'
 
-interface iBaseProps {
+interface iFirstAdminProps {
   id: string
 }
 
-export const Base = ({ id }: iBaseProps) => {
+export const FirstAdmin = ({ id }: iFirstAdminProps) => {
   const { setLoading, handleSucess, handleError } = useAppThemeContext()
   const { handleUserProfile } = useAuthContext()
   const [open, setOpen] = useState(false)

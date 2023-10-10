@@ -8,6 +8,7 @@ import {
   apiUser,
   iPeriod,
   iUser,
+  statusPtBr,
 } from '../../../shared'
 import dayjs from 'dayjs'
 import localizedFormat from 'dayjs/plugin/localizedFormat'
@@ -64,7 +65,11 @@ export const User = () => {
             p={1}
             gap={1}
           >
-            <Typography variant="subtitle2" fontWeight="bolder">
+            <Typography
+              variant="subtitle2"
+              fontWeight="bolder"
+              textAlign="center"
+            >
               {dayjs().format('dddd, LL')}
             </Typography>
             <ChildrenLoading isLoading={loading}>
@@ -73,7 +78,7 @@ export const User = () => {
               </Typography>
             </ChildrenLoading>
             <Typography variant="subtitle1" fontWeight="bolder">
-              CONFIRMADO
+              {statusPtBr(userData?.status)}
             </Typography>
           </Box>
         </Box>

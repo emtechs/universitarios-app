@@ -1,5 +1,6 @@
 import { Info } from '@mui/icons-material'
 import { IconButton, Button, Box } from '@mui/material'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
 import {
   FormContainer,
@@ -17,17 +18,16 @@ import {
   iRecordUpdateRequest,
   recordUpdateSchema,
   useAppThemeContext,
+  useAuthContext,
 } from '../../../shared'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useNavigate } from 'react-router-dom'
 
-interface iPendingProps {
+interface iFirstPendingProps {
   id: string
-  key_record: string
+  record_id: string
 }
 
-export const Pending = ({ id, key_record }: iPendingProps) => {
-  const navigate = useNavigate()
+export const FirstPending = ({ id, record_id }: iFirstPendingProps) => {
+  const { profileUser } = useAuthContext()
   const { setLoading, handleSucess, handleError } = useAppThemeContext()
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(!open)
@@ -35,16 +35,16 @@ export const Pending = ({ id, key_record }: iPendingProps) => {
   const first = async (data: iRecordUpdateRequest) => {
     try {
       setLoading(true)
-      await apiStudent.updateRecord(data, key_record)
+      await apiStudent.updateRecord(data, record_id)
       const dataImage = new FormData()
       if (data.avatar) dataImage.append('image', data.avatar)
       await apiImage.create(
         dataImage,
         id,
-        `?category=MAT&key_record=${key_record}`,
+        `?category=MAT&key_record=${record_id}`,
       )
       handleSucess('Dados cadastrados com sucesso')
-      navigate('/')
+      profileUser()
     } catch {
       handleError('Não foi possível cadastrar os dados no momento!')
     } finally {
@@ -71,35 +71,42 @@ export const Pending = ({ id, key_record }: iPendingProps) => {
             <Box display="flex" gap={1}>
               <TextFieldElement
                 name="semester"
-                label="Semestre"
+                label="Semestre Atual"
                 required
                 fullWidth
                 type="number"
               />
-              <SelectElement
-                label="Turno"
-                name="shift"
+              <TextFieldElement
+                name="total"
+                label="Total de Semestres"
+                required
                 fullWidth
-                options={[
-                  {
-                    id: 'MORNING',
-                    label: 'MATUTINO',
-                  },
-                  {
-                    id: 'AFTERNOON',
-                    label: 'VESPERTINO',
-                  },
-                  {
-                    id: 'NIGHT',
-                    label: 'NOTURNO',
-                  },
-                  {
-                    id: 'FULL',
-                    label: 'INTREGAL',
-                  },
-                ]}
+                type="number"
               />
             </Box>
+            <SelectElement
+              label="Turno"
+              name="shift"
+              fullWidth
+              options={[
+                {
+                  id: 'MORNING',
+                  label: 'MATUTINO',
+                },
+                {
+                  id: 'AFTERNOON',
+                  label: 'VESPERTINO',
+                },
+                {
+                  id: 'NIGHT',
+                  label: 'NOTURNO',
+                },
+                {
+                  id: 'FULL',
+                  label: 'INTREGAL',
+                },
+              ]}
+            />
             <Button variant="contained" type="submit" fullWidth>
               Enviar
             </Button>

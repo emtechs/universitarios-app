@@ -1,35 +1,30 @@
 import { z } from 'zod'
 import {
+  iClass,
+  iClassFreq,
+  iDataBase,
+  iStatus,
   recordUpdateSchema,
   studentRemoveSchema,
   studentTransferSchema,
-} from '../schemas'
-import { iClass, iClassFreq } from './class.interfaces'
+} from '../../shared'
 
-export interface iStudent {
+export type iShift = 'MORNING' | 'AFTERNOON' | 'NIGHT' | 'FULL'
+
+export interface iStudentBase {
   id: string
   name: string
   registry: string
-  class: {
-    id: string
-    name: string
-  }
-  school: {
-    id: string
-    name: string
-  }
+  class: iDataBase
+  school: iDataBase
+}
+
+export interface iStudent extends iStudentBase {
   year_id: string
   key: string
 }
 
-export interface iStudentResume {
-  id: string
-  name: string
-  registry: string
-  class: {
-    id: string
-    name: string
-  }
+export interface iStudentResume extends iStudentBase {
   frequencies: number
   infrequency: number
   absences: number
@@ -59,6 +54,16 @@ export interface iStudentFrequency extends iStudent {
 
 export interface iStudentDash extends iStudentFrequency {
   class: iClass
+}
+
+export interface iRecord {
+  key: string
+  status: iStatus
+  course: string
+  semester: number
+  total: number
+  shift: iShift
+  school: iDataBase
 }
 
 export type iStudentRemoveRequest = z.infer<typeof studentRemoveSchema>

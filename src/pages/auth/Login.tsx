@@ -18,7 +18,7 @@ import {
   Glossary,
 } from '../../shared'
 
-export const Login = () => {
+export const LoginPage = () => {
   const [searchParams] = useSearchParams()
   const cpf = searchParams.get('cpf') || undefined
   const { isAuthenticated, login, recovery } = useAuthContext()
@@ -26,7 +26,7 @@ export const Login = () => {
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(!open)
 
-  if (isAuthenticated) return <Navigate to="/home" />
+  if (isAuthenticated) return <Navigate to="/" />
 
   return (
     <>

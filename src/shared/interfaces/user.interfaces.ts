@@ -14,11 +14,20 @@ export type iRole = 'ADMIN' | 'SERV' | 'DIRET' | 'SECRET'
 
 export type iDash = 'COMMON' | 'SCHOOL' | 'ORGAN' | 'ADMIN'
 
+export type iStatus =
+  | 'CONFIRMED'
+  | 'REFUSED'
+  | 'ANALYZING'
+  | 'PENDING'
+  | 'BLOCKED'
+  | 'RECEIVED'
+
 export interface iUserProfile {
   id: string
   name: string
   role: iRole
   dash: iDash
+  is_super: boolean
   is_first_access: boolean
   profile?: {
     url: string
@@ -27,7 +36,8 @@ export interface iUserProfile {
   period_id: string
   is_open: boolean
   is_pending: boolean
-  key: string
+  record_id: string
+  status: iStatus
 }
 
 export interface iUser extends iUserProfile {
@@ -62,6 +72,15 @@ export interface iDiretor {
 export interface iServer extends iDiretor {
   role: iRole
   dash: iDash
+}
+
+export interface iDocument {
+  id: string
+  status: iStatus
+  image: {
+    id: string
+    url: string
+  }
 }
 
 export type iUserAdmRequest = z.infer<typeof createAdmSchema>

@@ -1,17 +1,17 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import {
-  AuthHomePage,
   ClassPage,
   DashboardSchoolPage,
   DataDashboardSchoolPage,
   EditPasswordPage,
   EditProfilePage,
   FrequencyPage,
+  HomeAuthPage,
   HomePage,
-  Login,
+  LoginPage,
   PasswordPage,
   PeriodPage,
-  Register,
+  RegisterPage,
   RequestPage,
   RetrieveClassPage,
   RetrievePeriodPage,
@@ -30,13 +30,13 @@ import { ProtectedAdmin, ProtectedAuth } from '../shared/components'
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
+      <Route path="/" element={<HomeAuthPage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/register" element={<RegisterPage />} />
       <Route path="/password/:userId/:token" element={<PasswordPage />} />
       <Route element={<ProtectedAuth />}>
         <Route element={<ProtectedAdmin />}>
-          <Route path="/dash" element={<AuthHomePage isHome />} />
+          <Route path="/dash" element={<HomePage isHome />} />
           <Route path="/user" element={<UserPage />}>
             <Route path=":user_id" element={<RetrieveUserPage />}>
               <Route path=":view" element={<ViewUserPage />} />
@@ -63,7 +63,6 @@ const AppRoutes = () => {
           </Route>
           <Route path="/request" element={<RequestPage />} />
         </Route>
-        <Route path="/home" element={<AuthHomePage />} />
         <Route path="/:school_id" element={<DashboardSchoolPage />}>
           <Route path=":view" element={<ViewDashboardSchoolPage />}>
             <Route path=":id" element={<DataDashboardSchoolPage />} />

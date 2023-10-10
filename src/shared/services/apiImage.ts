@@ -8,4 +8,8 @@ const create = async (
   await apiUsingNow.post(`images/user/${user_id}${query}`, data)
 }
 
-export const apiImage = { create }
+const createUser = async (data: FormData): Promise<void> => {
+  await apiUsingNow.post('images/user', data)
+}
+
+export const apiImage = { create, createUser }

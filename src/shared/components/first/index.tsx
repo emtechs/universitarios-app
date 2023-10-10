@@ -1,6 +1,6 @@
 import { iChildren, useAuthContext } from '../../../shared'
-import { Base } from './Base'
-import { Pending } from './Pending'
+import { FirstAdmin } from './Admin'
+import { FirstPending } from './Pending'
 
 export const First = ({ children }: iChildren) => {
   const { userProfile } = useAuthContext()
@@ -12,7 +12,9 @@ export const First = ({ children }: iChildren) => {
     if (userProfile.role !== 'ADMIN') {
       if (!userProfile.is_open) return <></>
       if (userProfile.is_open && userProfile.is_pending)
-        return <Pending id={userProfile.id} key_record={userProfile.key} />
+        return (
+          <FirstPending id={userProfile.id} record_id={userProfile.record_id} />
+        )
       if (
         userProfile.is_open &&
         !userProfile.is_pending &&
@@ -22,5 +24,5 @@ export const First = ({ children }: iChildren) => {
     }
   }
 
-  return <>{userProfile ? <Base id={userProfile.id} /> : <></>}</>
+  return <>{userProfile ? <FirstAdmin id={userProfile.id} /> : <></>}</>
 }

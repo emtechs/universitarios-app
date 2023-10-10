@@ -83,7 +83,8 @@ export const AuthProvider = ({ children }: iChildren) => {
         .then((res) => {
           apiUsingNow.defaults.headers.authorization = `Bearer ${accessToken}`
           setUserProfile(res)
-                  })
+          setDashData(res.dash)
+        })
         .catch(() => {
           localStorage.removeItem('@EMTechs:token')
           setAccessToken(undefined)

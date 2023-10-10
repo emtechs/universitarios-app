@@ -1,4 +1,6 @@
 export * from './UseBgColorInfrequency'
+export * from './UseBgColorUtil'
 export * from './UseDebounce'
+export * from './UseIconStatus'
 export * from './UseValueTabs'
 export * from './verify'

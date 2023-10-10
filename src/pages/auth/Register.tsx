@@ -25,7 +25,7 @@ import localizedFormat from 'dayjs/plugin/localizedFormat'
 import 'dayjs/locale/pt-br'
 dayjs.extend(localizedFormat)
 
-export const Register = () => {
+export const RegisterPage = () => {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
   const cpf = searchParams.get('cpf') || undefined
@@ -34,7 +34,7 @@ export const Register = () => {
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(!open)
 
-  if (isAuthenticated) return <Navigate to="/home" />
+  if (isAuthenticated) return <Navigate to="/" />
 
   const create = async (data: iRegisterRequest) => {
     try {

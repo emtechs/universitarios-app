@@ -57,11 +57,18 @@ const verifyCpf = async (cpf: string): Promise<void> => {
   await apiUsingNow.get(`login/${cpf}`)
 }
 
+const verifyPassword = async (
+  data: iRecoveryPasswordRequest,
+): Promise<void> => {
+  await apiUsingNow.post('verify/password', data)
+}
+
 export const apiAuth = {
   login,
+  register,
   recovery,
   passwordRecovery,
   verify,
   verifyCpf,
-  register,
+  verifyPassword,
 }

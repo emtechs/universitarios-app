@@ -1,7 +1,9 @@
 import { FieldValues } from 'react-hook-form'
 import { apiUsingNow } from './api'
 import {
+  iDocument,
   iPeriod,
+  iRecord,
   iSchool,
   iSchoolServer,
   iUser,
@@ -37,8 +39,21 @@ const retrieve = async (id: string, query: string): Promise<iUser> => {
   return response
 }
 
+interface iDocumentsReturn {
+  foto: iDocument
+  matricula: iDocument
+}
+
+const documents = async (id: string): Promise<iDocumentsReturn> => {
+  const { data: response } = await apiUsingNow.get<iDocumentsReturn>(
+    `users/documents/${id}`,
+  )
+  return response
+}
+
 interface iPageReturn {
   user: iUser
+  periods: iPeriod[]
   period: iPeriod
 }
 
@@ -55,6 +70,13 @@ const profile = async (token: string, query: string): Promise<iUserProfile> => {
     {
       headers: { Authorization: `Bearer ${token}` },
     },
+  )
+  return response
+}
+
+const record = async (id: string): Promise<iRecord> => {
+  const { data: response } = await apiUsingNow.get<iRecord>(
+    `users/record/${id}`,
   )
   return response
 }
@@ -94,6 +116,10 @@ const schools = async (query: string) => {
   return response
 }
 
+const destroy = async (login: string) => {
+  await apiUsingNow.delete(`users/${login}`)
+}
+
 export const apiUser = {
   create,
   createServer,
@@ -104,4 +130,7 @@ export const apiUser = {
   schools,
   retrieve,
   list,
+  destroy,
+  documents,
+  record,
 }
