@@ -24,14 +24,14 @@ export const MenuDrawer = () => {
   const { theme, smDown } = useAppThemeContext()
   const { isDrawerOpen, toggleDrawerOpen, handleClick, displayDash } =
     useDrawerContext()
-  const { userProfile, logout, dashData } = useAuthContext()
+  const { userProfile, logout } = useAuthContext()
   const user = {
     name: adaptName(userProfile?.name),
     src: userProfile?.profile?.url,
   }
 
   const listButton = useMemo(() => {
-    if (dashData === 'ADMIN') {
+    if (userProfile?.role === 'ADMIN') {
       if (displayDash === 'ADMIN')
         return (
           <ListItemButton component={Link} to="/dash" onClick={handleClick}>
@@ -60,7 +60,7 @@ export const MenuDrawer = () => {
         <ListItemText primary="Voltar" />
       </ListItemButton>
     )
-  }, [dashData, displayDash, handleClick])
+  }, [displayDash, handleClick])
 
   return (
     <Drawer

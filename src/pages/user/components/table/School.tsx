@@ -36,7 +36,6 @@ export const TableUserSchoolPage = ({
     return [
       { order: 'name', numeric: 'left', label: 'Escola' },
       { numeric: 'left', label: 'Função' },
-      { numeric: 'left', label: 'Tela' },
       { numeric: 'left', label: 'Ações' },
     ]
   }, [])
@@ -53,9 +52,6 @@ export const TableUserSchoolPage = ({
                 {name}
               </TableCellDataLoading>
               <TableCell>{rolePtBr(role)}</TableCell>
-              <TableCell>
-                {el.dash === 'SCHOOL' ? 'Escola' : 'Frequência'}
-              </TableCell>
               <ActionsRemove handleData={handleData} />
             </TableRow>
           )

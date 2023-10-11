@@ -10,8 +10,8 @@ import { useAuthContext } from '../../../../contexts'
 import { ListItemLink } from '../item'
 
 export const User = () => {
-  const { dashData } = useAuthContext()
-  switch (dashData) {
+  const { userProfile } = useAuthContext()
+  switch (userProfile?.role) {
     case 'ADMIN':
       return (
         <List component="div" disablePadding>
@@ -36,7 +36,7 @@ export const User = () => {
         </List>
       )
 
-    case 'SCHOOL':
+    default:
       return (
         <List component="div" disablePadding>
           <ListItemLink
@@ -51,8 +51,5 @@ export const User = () => {
           />
         </List>
       )
-
-    default:
-      return <></>
   }
 }

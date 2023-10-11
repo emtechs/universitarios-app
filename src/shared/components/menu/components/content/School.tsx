@@ -13,8 +13,8 @@ import { useAuthContext } from '../../../../contexts'
 import { ListItemLink } from '../item'
 
 export const School = () => {
-  const { dashData } = useAuthContext()
-  if (dashData !== 'ADMIN') {
+  const { userProfile } = useAuthContext()
+  if (userProfile?.role !== 'ADMIN') {
     return (
       <List component="div" disablePadding>
         <ListItemLink icon={<Workspaces />} label="Turmas" to="school/class" />

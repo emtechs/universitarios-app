@@ -35,7 +35,6 @@ export const TableUserSchool = ({ data, school_id }: iTableUserSchoolProps) => {
       { order: 'name', numeric: 'left', label: 'Nome Completo' },
       { numeric: 'left', label: 'CPF' },
       { numeric: 'left', label: 'Função' },
-      { numeric: 'left', label: 'Tela' },
       { numeric: 'left', label: 'Ações' },
     ]
   }, [mdDown])
@@ -64,13 +63,6 @@ export const TableUserSchool = ({ data, school_id }: iTableUserSchoolProps) => {
                   <TableCell>{user.cpf}</TableCell>
                   {!mdDown && (
                     <TableCell>{rolePtBr(user.work_school.role)}</TableCell>
-                  )}
-                  {!mdDown && (
-                    <TableCell>
-                      {user.work_school.dash === 'SCHOOL'
-                        ? 'Escola'
-                        : 'Frequência'}
-                    </TableCell>
                   )}
                   <ActionsRemove handleData={handleData} />
                 </TableRow>

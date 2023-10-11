@@ -3,10 +3,10 @@ import { OptionsAdmin } from './OptionsAdmin'
 import { OptionsSchool } from './OptionsSchool'
 
 export const Options = () => {
-  const { dashData } = useAuthContext()
+  const { userProfile } = useAuthContext()
   const { displayDash } = useDrawerContext()
 
-  switch (dashData) {
+  switch (userProfile?.role) {
     case 'ADMIN':
       return displayDash === 'ADMIN' ? <OptionsAdmin /> : <OptionsSchool />
 

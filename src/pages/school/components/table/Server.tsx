@@ -50,7 +50,6 @@ export const TableSchoolServerPage = ({
       { order: 'name', numeric: 'left', label: 'Nome Completo' },
       { numeric: 'left', label: 'CPF' },
       { numeric: 'left', label: 'Função' },
-      { numeric: 'left', label: 'Tela' },
       { numeric: 'left', label: 'Ações' },
     ]
   }, [mdDown])
@@ -65,11 +64,6 @@ export const TableSchoolServerPage = ({
               <TableCell>{user.name}</TableCell>
               <TableCell>{user.cpf}</TableCell>
               {!mdDown && <TableCell>{rolePtBr(user.role)}</TableCell>}
-              {!mdDown && (
-                <TableCell>
-                  {user.dash === 'SCHOOL' ? 'Escola' : 'Frequência'}
-                </TableCell>
-              )}
               <ActionsRemove handleData={handleData} />
             </TableRow>
           )

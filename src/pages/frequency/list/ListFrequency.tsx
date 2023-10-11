@@ -3,18 +3,12 @@ import { ListFrequencyCommon } from './ListFrequencyCommon'
 import { ListFrequencyAdm } from './ListFrequencyAdm'
 
 export const ListFrequencyPage = () => {
-  const { dashData } = useAuthContext()
-  switch (dashData) {
+  const { userProfile } = useAuthContext()
+  switch (userProfile?.role) {
     case 'ADMIN':
       return <ListFrequencyAdm />
 
-    case 'SCHOOL':
-      return <ListFrequencyCommon />
-
-    case 'COMMON':
-      return <ListFrequencyCommon />
-
     default:
-      return <></>
+      return <ListFrequencyCommon />
   }
 }

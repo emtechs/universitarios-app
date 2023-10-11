@@ -12,8 +12,6 @@ import { iDialogDataProps } from './global.interfaces'
 
 export type iRole = 'ADMIN' | 'SERV' | 'DIRET' | 'SECRET'
 
-export type iDash = 'COMMON' | 'SCHOOL' | 'ORGAN' | 'ADMIN'
-
 export type iStatus =
   | 'CONFIRMED'
   | 'REFUSED'
@@ -26,18 +24,16 @@ export interface iUserProfile {
   id: string
   name: string
   role: iRole
-  dash: iDash
   is_super: boolean
   is_first_access: boolean
   profile?: {
     url: string
   }
-  requests: number
-  period_id: string
-  is_open: boolean
   is_pending: boolean
   record_id: string
+  period_id: string
   status: iStatus
+  is_open: boolean
 }
 
 export interface iUser extends iUserProfile {
@@ -71,7 +67,6 @@ export interface iDiretor {
 
 export interface iServer extends iDiretor {
   role: iRole
-  dash: iDash
 }
 
 export interface iDocument {

@@ -8,7 +8,7 @@ import {
   studentCreateSchema,
   studentImportSchema,
 } from '../schemas'
-import { iDash, iDiretor, iRole, iServer } from './user.interfaces'
+import { iDiretor, iRole, iServer } from './user.interfaces'
 import { iClass } from './class.interfaces'
 import { iDialogDataProps } from './global.interfaces'
 
@@ -34,7 +34,6 @@ export interface iSchool {
   servers: number
   infrequency: number
   class?: iClass
-  dash: iDash
   role: iRole
   key: string
 }
@@ -55,20 +54,18 @@ export interface iSchoolUser {
   id: string
   name: string
   cpf: string
-  dash: iDash
+
   role: iRole
   key: string
 }
 
 export interface iWorkSchool {
-  dash: iDash
   role: iRole
   school: iSchool
 }
 
 export interface iSchoolServer {
   role: iRole
-  dash: iDash
   server: iServer
 }
 
