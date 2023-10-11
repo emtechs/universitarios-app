@@ -34,6 +34,7 @@ export interface iUserProfile {
   period_id: string
   status: iStatus
   is_open: boolean
+  records: number
 }
 
 export interface iUser extends iUserProfile {

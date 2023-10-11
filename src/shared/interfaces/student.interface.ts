@@ -63,7 +63,9 @@ export interface iRecord {
   semester: number
   total: number
   shift: iShift
+  created_at: Date
   school: iDataBase
+  user: { id: string; name: string; cpf: string }
 }
 
 export type iStudentRemoveRequest = z.infer<typeof studentRemoveSchema>

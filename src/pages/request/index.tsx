@@ -10,8 +10,9 @@ import {
   useAppThemeContext,
   apiFrequency,
   useAuthContext,
-  iRequest,
   useParamsContext,
+  apiStudent,
+  iRecord,
 } from '../../shared'
 import { ViewRequestPage } from './view'
 import { ButtonRequestPage } from './components'
@@ -21,12 +22,12 @@ export const RequestPage = () => {
   const { refreshUser } = useAuthContext()
   const { setCount } = usePaginationContext()
   const { selected, onClickReset, setIsLoading } = useParamsContext()
-  const [requestData, setRequestData] = useState<iRequest[]>([])
+  const [requestData, setRequestData] = useState<iRecord[]>([])
 
   const getRequest = useCallback(() => {
     setIsLoading(true)
-    apiFrequency
-      .listRequest()
+    apiStudent
+      .records('')
       .then((res) => {
         setRequestData(res.result)
         setCount(res.total)
@@ -58,7 +59,7 @@ export const RequestPage = () => {
       title={
         <TitleBasePage>
           <Chip
-            label="Solicitações"
+            label="Registros"
             color="primary"
             icon={<LibraryAddCheck sx={{ mr: 0.5 }} fontSize="inherit" />}
           />
