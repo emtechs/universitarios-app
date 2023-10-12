@@ -26,6 +26,7 @@ export interface iUserProfile {
   role: iRole
   is_super: boolean
   is_first_access: boolean
+  is_block: boolean
   profile?: {
     url: string
   }

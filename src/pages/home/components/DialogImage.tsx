@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Box, Button } from '@mui/material'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { FormContainer } from 'react-hook-form-mui'
 import {
   DialogBaseChildren,
@@ -48,29 +48,52 @@ export const DialogImage = ({
       setLoading(false)
     }
   }
+
+  const dialog = useMemo(() => {
+    switch (document?.status) {
+      case 'ANALYZING':
+        return (
+          <DialogBaseChildren
+            open={open}
+            onClose={onClose}
+            description=""
+            title={`Visualizar ${title}`}
+          >
+            <img src={document?.image.url} alt={title} />
+          </DialogBaseChildren>
+        )
+
+      case 'CONFIRMED':
+        return (
+          <DialogBaseChildren
+            open={open}
+            onClose={onClose}
+            description=""
+            title={`Visualizar ${title}`}
+          >
+            <img src={document?.image.url} alt={title} />
+          </DialogBaseChildren>
+        )
+
+      default:
+        return (
+          <DialogBaseChildrenAction
+            open={open}
+            onClose={onClose}
+            title={`Visualizar ${title}`}
+            description=""
+            action={onCloseImage}
+            actionTitle="Alterar"
+          >
+            <img src={document?.image.url} alt={title} />
+          </DialogBaseChildrenAction>
+        )
+    }
+  }, [document?.image.url, document?.status, onClose, open, title])
+
   return (
     <>
-      {document?.status !== 'ANALYZING' ? (
-        <DialogBaseChildrenAction
-          open={open}
-          onClose={onClose}
-          title={`Visualizar ${title}`}
-          description=""
-          action={onCloseImage}
-          actionTitle="Alterar"
-        >
-          <img src={document?.image.url} alt={title} />
-        </DialogBaseChildrenAction>
-      ) : (
-        <DialogBaseChildren
-          open={open}
-          onClose={onClose}
-          description=""
-          title={`Alterar ${title}`}
-        >
-          <img src={document?.image.url} alt={title} />
-        </DialogBaseChildren>
-      )}
+      {dialog}
       {document && (
         <DialogBaseChildren
           open={openImage}
