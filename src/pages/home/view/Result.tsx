@@ -66,7 +66,7 @@ export const Result = ({ is_block }: iResultProps) => {
   return (
     <>
       {is_block ? (
-        <Grid item xs={12} md={9}>
+        <Grid item xs={12} md={9} width="100%">
           <Box component={Paper}>
             <Box
               height={theme.spacing(7)}
@@ -93,7 +93,7 @@ export const Result = ({ is_block }: iResultProps) => {
           </Box>
         </Grid>
       ) : (
-        <Grid item xs={12}>
+        <Grid item xs={12} width="100%">
           <Accordion>
             <AccordionSummary expandIcon={<ExpandMore />}>
               <Typography
