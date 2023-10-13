@@ -1,3 +1,3 @@
-export * from './DialogImage'
-export * from './DialogRecord'
-export * from './DialogResult'
+export * from './Image'
+export * from './Record'
+export * from './Result'

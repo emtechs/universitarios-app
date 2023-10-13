@@ -66,6 +66,17 @@ const updateRecord = async (
   return response
 }
 
+const updateRecordStatus = async (
+  data: FieldValues,
+  key: string,
+): Promise<iStudent> => {
+  const { data: response } = await apiUsingNow.patch<iStudent>(
+    `students/record/${key}/status`,
+    data,
+  )
+  return response
+}
+
 const impStudent = async (
   data: FormData,
   class_id: string,
@@ -114,4 +125,5 @@ export const apiStudent = {
   listClass,
   resume,
   records,
+  updateRecordStatus,
 }

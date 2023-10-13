@@ -1,6 +1,7 @@
 import { FieldValues } from 'react-hook-form'
 import { apiUsingNow } from './api'
 import {
+  iAction,
   iDocument,
   iPeriod,
   iRecord,
@@ -10,6 +11,17 @@ import {
   iUserProfile,
   iWorkSchool,
 } from '../interfaces'
+
+interface iActionsReturn {
+  total: number
+  result: iAction[]
+}
+
+const actions = async (): Promise<iActionsReturn> => {
+  const { data: response } =
+    await apiUsingNow.get<iActionsReturn>('users/actions')
+  return response
+}
 
 const create = async (
   data: FieldValues,
@@ -121,6 +133,7 @@ const destroy = async (login: string) => {
 }
 
 export const apiUser = {
+  actions,
   create,
   createServer,
   page,

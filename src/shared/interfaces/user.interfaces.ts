@@ -81,6 +81,7 @@ export interface iServer extends iDiretor {
 export interface iDocument {
   id: string
   status: iStatus
+  record_id: string
   image: {
     id: string
     url: string

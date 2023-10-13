@@ -1,3 +1,4 @@
+import { FieldValues } from 'react-hook-form'
 import { apiUsingNow } from './api'
 
 const create = async (
@@ -16,4 +17,8 @@ const update = async (id: string, data: FormData): Promise<void> => {
   await apiUsingNow.patch(`images/${id}`, data)
 }
 
-export const apiImage = { create, createUser, update }
+const updateStatus = async (id: string, data: FieldValues): Promise<void> => {
+  await apiUsingNow.patch(`images/${id}/status`, data)
+}
+
+export const apiImage = { create, createUser, update, updateStatus }

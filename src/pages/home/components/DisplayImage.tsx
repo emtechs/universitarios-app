@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ExpandMore, Loupe } from '@mui/icons-material'
+import { ExpandMore, Loupe, Warning } from '@mui/icons-material'
 import {
   AccordionDetails,
   Tooltip,
@@ -12,6 +12,7 @@ import {
 } from '@mui/material'
 import { iDocument, useIconStatus } from '../../../shared'
 import { DialogImage, DialogResult } from './dialog'
+import { DialogUpload } from './dialog/Upload'
 
 interface iDisplayImageProps {
   title: string
@@ -27,9 +28,11 @@ export const DisplayImage = ({
   const { defineIconStatus } = useIconStatus()
   const [open, setOpen] = useState(false)
   const [openResult, setOpenResult] = useState(false)
+  const [openImage, setOpenImage] = useState(false)
 
   const onClose = () => setOpen((old) => !old)
   const onCloseResult = () => setOpenResult((old) => !old)
+  const onCloseImage = () => setOpenImage((old) => !old)
 
   return (
     <>
@@ -65,6 +68,13 @@ export const DisplayImage = ({
                   <Loupe />
                 </IconButton>
               </Tooltip>
+              {document?.status === 'REFUSED' && (
+                <Tooltip title="Resolver">
+                  <IconButton color="warning" onClick={onCloseImage}>
+                    <Warning />
+                  </IconButton>
+                </Tooltip>
+              )}
             </Typography>
           </Box>
         </AccordionDetails>
@@ -81,6 +91,17 @@ export const DisplayImage = ({
           open={openResult}
           onClose={onCloseResult}
           data={document.action}
+        />
+      )}
+      {document && (
+        <DialogUpload
+          document={document}
+          getDocs={getDocs}
+          onClose={onCloseImage}
+          onCloseImage={onCloseImage}
+          open={openImage}
+          title={title}
+          is_pending
         />
       )}
     </>

@@ -15,7 +15,11 @@ import localizedFormat from 'dayjs/plugin/localizedFormat'
 import 'dayjs/locale/pt-br'
 dayjs.extend(localizedFormat)
 
-export const User = () => {
+interface iUserProps {
+  status?: string
+}
+
+export const User = ({ status }: iUserProps) => {
   const [userData, setUserData] = useState<iUser>()
   const [periodData, setPeriodData] = useState<iPeriod>()
   const [loading, setLoading] = useState(false)
@@ -79,7 +83,7 @@ export const User = () => {
             </ChildrenLoading>
             <ChildrenLoading isLoading={loading}>
               <Typography variant="subtitle1" fontWeight="bolder">
-                {statusPtBr(userData?.status).toUpperCase()}
+                {status || statusPtBr(userData?.status).toUpperCase()}
               </Typography>
             </ChildrenLoading>
           </Box>
