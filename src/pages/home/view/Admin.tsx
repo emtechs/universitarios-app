@@ -8,8 +8,8 @@ import {
   CalendarDashAdmin,
   GridDashAdmin,
   Footer,
-} from '../../shared'
-import { DialogRecord } from './components'
+} from '../../../shared'
+import { DialogRecord } from '../components'
 
 export const HomePageAdmin = () => {
   const { refreshUser } = useAuthContext()

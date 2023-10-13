@@ -9,6 +9,7 @@ import {
 } from '../schemas'
 import { iWorkSchool } from './school.interface'
 import { iDialogDataProps } from './global.interfaces'
+import { iAction } from '.'
 
 export type iRole = 'ADMIN' | 'SERV' | 'DIRET' | 'SECRET'
 
@@ -19,6 +20,12 @@ export type iStatus =
   | 'PENDING'
   | 'BLOCKED'
   | 'RECEIVED'
+
+export interface iUserBase {
+  id: string
+  name: string
+  cpf: string
+}
 
 export interface iUserProfile {
   id: string
@@ -31,9 +38,9 @@ export interface iUserProfile {
     url: string
   }
   is_pending: boolean
-  record_id: string
+  record_id?: string
   period_id: string
-  status: iStatus
+  status?: iStatus
   is_open: boolean
   records: number
 }
@@ -78,6 +85,7 @@ export interface iDocument {
     id: string
     url: string
   }
+  action: iAction
 }
 
 export type iUserAdmRequest = z.infer<typeof createAdmSchema>

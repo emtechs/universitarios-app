@@ -3,15 +3,15 @@ import { Box, Button } from '@mui/material'
 import { useMemo, useState } from 'react'
 import { FormContainer } from 'react-hook-form-mui'
 import {
-  DialogBaseChildren,
-  DialogBaseChildrenAction,
-  InputFile,
-  apiImage,
-  avatarSchema,
-  iAvatarRequest,
   iDocument,
   useAppThemeContext,
-} from '../../../shared'
+  iAvatarRequest,
+  apiImage,
+  DialogBaseChildren,
+  DialogBaseChildrenAction,
+  avatarSchema,
+  InputFile,
+} from '../../../../shared'
 
 interface iDialogImageProps {
   title: string
@@ -51,31 +51,7 @@ export const DialogImage = ({
 
   const dialog = useMemo(() => {
     switch (document?.status) {
-      case 'ANALYZING':
-        return (
-          <DialogBaseChildren
-            open={open}
-            onClose={onClose}
-            description=""
-            title={`Visualizar ${title}`}
-          >
-            <img src={document?.image.url} alt={title} />
-          </DialogBaseChildren>
-        )
-
-      case 'CONFIRMED':
-        return (
-          <DialogBaseChildren
-            open={open}
-            onClose={onClose}
-            description=""
-            title={`Visualizar ${title}`}
-          >
-            <img src={document?.image.url} alt={title} />
-          </DialogBaseChildren>
-        )
-
-      default:
+      case 'RECEIVED':
         return (
           <DialogBaseChildrenAction
             open={open}
@@ -87,6 +63,18 @@ export const DialogImage = ({
           >
             <img src={document?.image.url} alt={title} />
           </DialogBaseChildrenAction>
+        )
+
+      default:
+        return (
+          <DialogBaseChildren
+            open={open}
+            onClose={onClose}
+            description=""
+            title={`Visualizar ${title}`}
+          >
+            <img src={document?.image.url} alt={title} />
+          </DialogBaseChildren>
         )
     }
   }, [document?.image.url, document?.status, onClose, open, title])

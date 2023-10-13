@@ -1,12 +1,12 @@
-import { Box, Divider, Grid, Paper, Typography } from '@mui/material'
+import { useState, useEffect } from 'react'
 import { PermMedia } from '@mui/icons-material'
+import { Box, Divider, Grid, Paper, Typography } from '@mui/material'
 import {
   apiUser,
   iDocument,
   useAppThemeContext,
   useAuthContext,
 } from '../../../shared'
-import { useState, useEffect } from 'react'
 import { DisplayImage } from '../components'
 
 export const Documents = () => {
@@ -16,7 +16,7 @@ export const Documents = () => {
   const [mtData, setMtData] = useState<iDocument>()
 
   const getDocs = () => {
-    if (userProfile)
+    if (userProfile?.record_id)
       apiUser.documents(userProfile.record_id).then((res) => {
         setFtData(res.foto)
         setMtData(res.matricula)

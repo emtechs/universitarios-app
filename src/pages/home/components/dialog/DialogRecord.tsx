@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAuthContext, DialogBase } from '../../../shared'
+import { useAuthContext, DialogBase } from '../../../../shared'
 
 export const DialogRecord = () => {
   const navigate = useNavigate()

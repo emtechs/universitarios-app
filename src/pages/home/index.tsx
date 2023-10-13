@@ -1,37 +1,35 @@
-import { Box, Container, Grid } from '@mui/material'
 import { Navigate } from 'react-router-dom'
-import { useAppThemeContext, useAuthContext, Header } from '../../shared'
-import { HomePageAdmin } from './Admin'
-import { Documents, Data, User } from './view'
+import { useAuthContext } from '../../shared'
+import { HomePageAdmin, Base, Documents, Data, User, Result } from './view'
+import { useMemo } from 'react'
 
 interface iHomePageProps {
   isHome?: boolean
 }
 
 export const HomePage = ({ isHome }: iHomePageProps) => {
-  const { theme, mdDown } = useAppThemeContext()
   const { isAuthenticated, userProfile } = useAuthContext()
+
+  const data = useMemo(() => {
+    if (!userProfile?.record_id || userProfile.is_block || !userProfile.is_open)
+      return (
+        <>
+          <User />
+        </>
+      )
+    return (
+      <>
+        <Documents />
+        <Data />
+        <User />
+        <Result />
+      </>
+    )
+  }, [])
 
   if (!isAuthenticated) return <Navigate to="/login" />
 
   if (userProfile?.role === 'ADMIN' && !isHome) return <HomePageAdmin />
 
-  return (
-    <Box display="flex" flexDirection="column">
-      <Header isHome={isHome} />
-      <Box mt={theme.spacing(7)}>
-        <Container>
-          <Grid
-            container
-            direction={mdDown ? 'column' : 'row'}
-            spacing={mdDown ? 2 : 5}
-          >
-            <Documents />
-            <Data />
-            <User />
-          </Grid>
-        </Container>
-      </Box>
-    </Box>
-  )
+  return <Base isHome={isHome}>{data}</Base>
 }

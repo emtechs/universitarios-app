@@ -1,3 +1,5 @@
+import { useState } from 'react'
+import { ExpandMore, Loupe } from '@mui/icons-material'
 import {
   AccordionDetails,
   Tooltip,
@@ -8,10 +10,8 @@ import {
   Accordion,
   AccordionSummary,
 } from '@mui/material'
-import { useState } from 'react'
-import { ExpandMore } from '@mui/icons-material'
 import { iDocument, useIconStatus } from '../../../shared'
-import { DialogImage } from './DialogImage'
+import { DialogImage, DialogResult } from './dialog'
 
 interface iDisplayImageProps {
   title: string
@@ -26,7 +26,10 @@ export const DisplayImage = ({
 }: iDisplayImageProps) => {
   const { defineIconStatus } = useIconStatus()
   const [open, setOpen] = useState(false)
+  const [openResult, setOpenResult] = useState(false)
+
   const onClose = () => setOpen((old) => !old)
+  const onCloseResult = () => setOpenResult((old) => !old)
 
   return (
     <>
@@ -55,7 +58,14 @@ export const DisplayImage = ({
             </IconButton>
           </Tooltip>
           <Box p={1}>
-            <Typography>Documento Recebido</Typography>
+            <Typography>
+              {document?.action.description}{' '}
+              <Tooltip title="Detalhes">
+                <IconButton color="primary" onClick={onCloseResult}>
+                  <Loupe />
+                </IconButton>
+              </Tooltip>
+            </Typography>
           </Box>
         </AccordionDetails>
       </Accordion>
@@ -66,6 +76,13 @@ export const DisplayImage = ({
         title={title}
         document={document}
       />
+      {document && (
+        <DialogResult
+          open={openResult}
+          onClose={onCloseResult}
+          data={document.action}
+        />
+      )}
     </>
   )
 }

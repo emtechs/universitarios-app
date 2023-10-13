@@ -4,6 +4,7 @@ import {
   iClassFreq,
   iDataBase,
   iStatus,
+  iUserBase,
   recordUpdateSchema,
   studentRemoveSchema,
   studentTransferSchema,
@@ -65,7 +66,15 @@ export interface iRecord {
   shift: iShift
   created_at: Date
   school: iDataBase
-  user: { id: string; name: string; cpf: string }
+  user: iUserBase
+}
+
+export interface iAction {
+  id: string
+  description: string
+  justification?: string
+  created_at: Date
+  user: iUserBase
 }
 
 export type iStudentRemoveRequest = z.infer<typeof studentRemoveSchema>

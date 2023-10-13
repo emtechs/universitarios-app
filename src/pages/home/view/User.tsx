@@ -77,9 +77,11 @@ export const User = () => {
                 {periodData?.name}
               </Typography>
             </ChildrenLoading>
-            <Typography variant="subtitle1" fontWeight="bolder">
-              {statusPtBr(userData?.status).toUpperCase()}
-            </Typography>
+            <ChildrenLoading isLoading={loading}>
+              <Typography variant="subtitle1" fontWeight="bolder">
+                {statusPtBr(userData?.status).toUpperCase()}
+              </Typography>
+            </ChildrenLoading>
           </Box>
         </Box>
         <Box mb={2} component={Paper}>

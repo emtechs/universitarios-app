@@ -1,14 +1,7 @@
-import {
-  Box,
-  Card,
-  CardContent,
-  Divider,
-  Grid,
-  Paper,
-  Typography,
-} from '@mui/material'
+import { Box, Divider, Grid, Paper, Typography } from '@mui/material'
 import { Article } from '@mui/icons-material'
 import {
+  ChildrenLoading,
   apiUser,
   iRecord,
   shiftPtBr,
@@ -21,10 +14,16 @@ export const Data = () => {
   const { mdDown, theme } = useAppThemeContext()
   const { userProfile } = useAuthContext()
   const [recordData, setRecordData] = useState<iRecord>()
+  const [loading, setLoading] = useState(false)
 
   const getUser = () => {
-    if (userProfile)
-      apiUser.record(userProfile.record_id).then((res) => setRecordData(res))
+    if (userProfile?.record_id) {
+      setLoading(true)
+      apiUser
+        .record(userProfile.record_id)
+        .then((res) => setRecordData(res))
+        .finally(() => setLoading(false))
+    }
   }
 
   useEffect(() => {
@@ -53,26 +52,30 @@ export const Data = () => {
           </Typography>
         </Box>
         <Divider />
-        <Box p={1}>
-          <Card>
-            <CardContent>
-              <Box display="flex" flexDirection="column" gap={0.5}>
-                <Typography
-                  component="div"
-                  textAlign="center"
-                  height={mdDown ? theme.spacing(8) : theme.spacing(5)}
-                  fontWeight="bolder"
-                  variant="body1"
-                >
-                  {recordData?.school.name.toUpperCase()}
-                </Typography>
-                <Typography variant="body2" textAlign="center">
-                  {recordData?.course.toUpperCase()} - {recordData?.semester}/
-                  {recordData?.total} - {shiftPtBr(recordData?.shift)}
-                </Typography>
-              </Box>
-            </CardContent>
-          </Card>
+        <Box
+          p={1}
+          display="flex"
+          alignItems="center"
+          flexDirection="column"
+          gap={0.5}
+        >
+          <ChildrenLoading isLoading={loading}>
+            <Typography
+              component="div"
+              textAlign="center"
+              height={mdDown ? theme.spacing(8) : theme.spacing(5)}
+              fontWeight="bolder"
+              variant="body1"
+            >
+              {recordData?.school.name.toUpperCase()}
+            </Typography>
+          </ChildrenLoading>
+          <ChildrenLoading isLoading={loading}>
+            <Typography variant="body2" textAlign="center">
+              {recordData?.course.toUpperCase()} - {recordData?.semester}/
+              {recordData?.total} - {shiftPtBr(recordData?.shift)}
+            </Typography>
+          </ChildrenLoading>
         </Box>
       </Box>
     </Grid>
