@@ -54,6 +54,9 @@ const retrieve = async (id: string, query: string): Promise<iUser> => {
 interface iDocumentsReturn {
   foto: iDocument
   matricula: iDocument
+  doc_ft_frente: iDocument
+  doc_ft_verso: iDocument
+  end: iDocument
 }
 
 const documents = async (id: string): Promise<iDocumentsReturn> => {

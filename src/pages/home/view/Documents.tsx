@@ -8,18 +8,25 @@ import {
   useAuthContext,
 } from '../../../shared'
 import { DisplayImage } from '../components'
+import { DocFt } from '../components/image/DocFt'
 
 export const Documents = () => {
   const { theme } = useAppThemeContext()
   const { userProfile } = useAuthContext()
   const [ftData, setFtData] = useState<iDocument>()
   const [mtData, setMtData] = useState<iDocument>()
+  const [docFtData, setDocFtData] = useState<iDocument>()
+  const [docFtBData, setDocFtBData] = useState<iDocument>()
+  const [endData, setEndData] = useState<iDocument>()
 
   const getDocs = () => {
     if (userProfile?.record_id)
       apiUser.documents(userProfile.record_id).then((res) => {
         setFtData(res.foto)
         setMtData(res.matricula)
+        setDocFtData(res.doc_ft_frente)
+        setDocFtBData(res.doc_ft_verso)
+        setEndData(res.end)
       })
   }
 
@@ -51,6 +58,17 @@ export const Documents = () => {
         <Divider />
         <Box p={1}>
           <DisplayImage document={ftData} title="Foto" getDocs={getDocs} />
+          <DocFt
+            frente={docFtData}
+            verso={docFtBData}
+            title="Documento de Identificação com Foto"
+            getDocs={getDocs}
+          />
+          <DisplayImage
+            document={endData}
+            title="Comprovante de Endereço"
+            getDocs={getDocs}
+          />
           <DisplayImage
             document={mtData}
             title="Declaração da Instituição de Ensino ou Atestado de Matrícula"
