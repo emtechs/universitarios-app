@@ -23,11 +23,11 @@ export const DialogCreateYearPeriod = ({ getData }: iDialogDataProps) => {
       handleOpenCreate()
       setLoading(true)
       await apiCalendar.createYear(data)
-      handleSucess(`Sucesso ao criar Ano Letivo!`)
+      handleSucess(`Sucesso ao criar Ano!`)
       onClickReset()
       getData && getData()
     } catch {
-      handleError(`Não foi possível criar o Ano Letivo no momento!`)
+      handleError(`Não foi possível criar o Ano no momento!`)
     } finally {
       setLoading(false)
     }
@@ -37,7 +37,7 @@ export const DialogCreateYearPeriod = ({ getData }: iDialogDataProps) => {
     <DialogBaseChildren
       open={openCreate}
       onClose={handleOpenCreate}
-      title="Novo Ano Letivo"
+      title="Novo Ano"
       description=""
     >
       <FormContainer
@@ -45,7 +45,7 @@ export const DialogCreateYearPeriod = ({ getData }: iDialogDataProps) => {
         resolver={zodResolver(createYearSchema)}
       >
         <BaseContentChildren>
-          <DateCreateYearPeriod name="year" label="Ano Letivo" />
+          <DateCreateYearPeriod name="year" label="Ano" />
           <Button variant="contained" type="submit">
             Salvar
           </Button>

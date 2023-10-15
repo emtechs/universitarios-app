@@ -32,7 +32,7 @@ export const UserPage = () => {
           />
         </TitleBasePage>
       }
-      tools={<Tools isHome isUser isActive isSearch isReset />}
+      tools={<Tools isHome isNew isActive isSearch isReset />}
     >
       <ViewUserPage />
       <Footer />

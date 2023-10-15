@@ -22,11 +22,11 @@ export const DialogCreateSchool = () => {
       handleOpenCreate()
       setLoading(true)
       const school = await apiSchool.create(data)
-      handleSucess('A escola foi cadastrada com sucesso!')
+      handleSucess('A Instituição de Ensino foi cadastrada com sucesso!')
       navigate('/school/' + school.id)
     } catch {
       handleError(
-        'No momento, não foi possível cadastrar a escola. Por favor, tente novamente mais tarde.',
+        'No momento, não foi possível cadastrar a Instituição de Ensino. Por favor, tente novamente mais tarde.',
       )
     } finally {
       setLoading(false)
@@ -37,7 +37,7 @@ export const DialogCreateSchool = () => {
     <DialogBaseChildren
       open={openCreate}
       onClose={handleOpenCreate}
-      title="Nova Escola"
+      title="Nova Instituição de Ensino"
       description=""
     >
       <FormContainer
@@ -47,7 +47,7 @@ export const DialogCreateSchool = () => {
         <BaseContentChildren>
           <TextFieldElement
             name="name"
-            label="Nome da Escola"
+            label="Nome da Instituição de Ensino"
             required
             fullWidth
           />

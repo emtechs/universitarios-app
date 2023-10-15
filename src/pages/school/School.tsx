@@ -10,7 +10,6 @@ import {
   Footer,
 } from '../../shared'
 import { ViewSchoolPage, ViewSchoolUtilPage } from './view'
-import { TabsSchoolPage } from './components'
 
 export const SchoolPage = () => {
   const [searchParams] = useSearchParams()
@@ -31,7 +30,7 @@ export const SchoolPage = () => {
       title={
         <TitleBasePage>
           <Chip
-            label="Escolas"
+            label="Instituições"
             color="primary"
             icon={<School sx={{ mr: 0.5 }} fontSize="inherit" />}
           />
@@ -49,7 +48,6 @@ export const SchoolPage = () => {
         />
       }
     >
-      <TabsSchoolPage />
       <ViewSchoolPage />
       <Footer />
     </LayoutBasePage>

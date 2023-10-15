@@ -12,7 +12,7 @@ import { iWorkSchool } from './school.interface'
 import { iDialogDataProps } from './global.interfaces'
 import { iAction } from '.'
 
-export type iRole = 'ADMIN' | 'SERV' | 'DIRET' | 'SECRET'
+export type iRole = 'ADMIN' | 'LEADER' | 'COMMON'
 
 export type iStatus =
   | 'CONFIRMED'

@@ -1,17 +1,14 @@
 import { iRole } from '../interfaces'
 
-export const rolePtBr = (role: iRole = 'SERV') => {
+export const rolePtBr = (role: iRole = 'COMMON') => {
   switch (role) {
     case 'ADMIN':
       return 'Administrador'
 
-    case 'DIRET':
-      return 'Diretor de Escola'
+    case 'LEADER':
+      return 'Líder'
 
-    case 'SECRET':
-      return 'Secretário'
-
-    case 'SERV':
-      return 'Servidor'
+    case 'COMMON':
+      return 'Usuário'
   }
 }

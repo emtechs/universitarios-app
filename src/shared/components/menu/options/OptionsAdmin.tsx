@@ -1,6 +1,7 @@
 import {
   AccountBox,
   Checklist,
+  FolderShared,
   Groups,
   Home,
   LibraryAddCheck,
@@ -27,12 +28,17 @@ export const OptionsAdmin = () => {
             </Badge>
           }
           label="Novos Registros"
-          to="request"
+          to="record"
         />
       )}
       <OtherListItemLink icon={<Home />} label="Página Inicial" />
       <OtherListItemLink icon={<People />} label="Usuários" to="user" />
-      <OtherListItemLink icon={<School />} label="Escolas" to="school" />
+      <OtherListItemLink
+        icon={<FolderShared />}
+        label="Registros"
+        to="record"
+      />
+      <OtherListItemLink icon={<School />} label="Instituições" to="school" />
       <OtherListItemLink icon={<Workspaces />} label="Turmas" to="class" />
       <OtherListItemLink icon={<Groups />} label="Alunos" to="student" />
       <OtherListItemLink

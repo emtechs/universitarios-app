@@ -6,7 +6,6 @@ import {
   iHeadCell,
   TableBase,
   LinkText,
-  TableCellDataLoading,
   ActionsActive,
   useParamsContext,
 } from '../../../../shared'
@@ -44,15 +43,14 @@ export const TableSchoolPage = ({
   }, [by, listData, order])
 
   const headCells: iHeadCell[] = [
-    { order: 'name', numeric: 'left', label: 'Escola' },
-    { order: 'director_name', numeric: 'left', label: 'Diretor' },
+    { order: 'name', numeric: 'left', label: 'Instituição de Ensino' },
     { numeric: 'left', label: 'Ações' },
   ]
 
   return (
-    <TableBase headCells={headCells} message="Nenhuma escola encotrada">
+    <TableBase headCells={headCells} message="Nenhuma instituição encotrada">
       {data.map((school) => {
-        const { id, name, director, is_active } = school
+        const { id, name, is_active } = school
         const to = `/school/${school.id}`
         const handleData = () => handleSchool(school)
         return (
@@ -70,9 +68,6 @@ export const TableSchoolPage = ({
                 name
               )}
             </TableCell>
-            <TableCellDataLoading loading={isLoading} width={200}>
-              {director?.name}
-            </TableCellDataLoading>
             <ActionsActive
               handleData={handleData}
               is_active={is_active}

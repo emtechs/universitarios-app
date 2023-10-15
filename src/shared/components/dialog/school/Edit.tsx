@@ -26,11 +26,13 @@ export const DialogEditSchool = ({ school, getData }: iDialogSchoolProps) => {
       handleOpenEdit()
       setLoading(true)
       await apiSchool.update(data, school.id, '')
-      handleSucess(`Sucesso ao alterar o nome da Escola!`)
+      handleSucess(`Sucesso ao alterar o nome da Instituição de Ensino!`)
       onClickReset()
       getData && getData()
     } catch {
-      handleError(`Não foi possível atualizar o nome da escola no momento!`)
+      handleError(
+        `Não foi possível atualizar o nome da Instituição de Ensino no momento!`,
+      )
     } finally {
       setLoading(false)
     }
@@ -40,7 +42,7 @@ export const DialogEditSchool = ({ school, getData }: iDialogSchoolProps) => {
     <DialogBaseChildren
       open={openEdit}
       onClose={handleOpenEdit}
-      title="Editar Escola"
+      title="Editar Instituição de Ensino"
       description=""
     >
       <FormContainer
@@ -53,7 +55,7 @@ export const DialogEditSchool = ({ school, getData }: iDialogSchoolProps) => {
         <BaseContentChildren>
           <TextFieldElement
             name="name"
-            label="Nome da Escola"
+            label="Nome da Instituição de Ensino"
             required
             fullWidth
           />

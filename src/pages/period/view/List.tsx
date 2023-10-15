@@ -33,7 +33,7 @@ export const ViewPeriodPage = () => {
   }, [])
 
   const define_query = useCallback((comp: string) => {
-    return `?category=ANO${comp}`
+    return `?by=asc${comp}`
   }, [])
 
   const getData = () => getPeriod(define_query(''))
