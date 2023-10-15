@@ -36,7 +36,7 @@ export const User = ({ status }: iUserProps) => {
 
   return (
     <>
-      <Grid item xs={12} md={3}>
+      <Grid item xs={12} md={3} width="100%">
         <Box mb={2} component={Paper}>
           <Box
             width="100%"

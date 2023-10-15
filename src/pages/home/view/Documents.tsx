@@ -35,7 +35,7 @@ export const Documents = () => {
   }, [])
 
   return (
-    <Grid item xs={12} md={5}>
+    <Grid item xs={12} md={5} width="100%">
       <Box component={Paper}>
         <Box
           height={theme.spacing(7)}
