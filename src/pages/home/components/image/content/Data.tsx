@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Loupe, Warning } from '@mui/icons-material'
+import { Edit, Loupe, Warning } from '@mui/icons-material'
 import {
   AccordionDetails,
   Tooltip,
@@ -9,7 +9,12 @@ import {
   Typography,
 } from '@mui/material'
 import { iDocument } from '../../../../../shared'
-import { DialogImage, DialogResult, DialogUpload } from '../../dialog'
+import {
+  DialogEdit,
+  DialogImage,
+  DialogResult,
+  DialogUpload,
+} from '../../dialog'
 
 interface iDataProps {
   document: iDocument
@@ -21,10 +26,12 @@ export const Data = ({ document, title, getDocs }: iDataProps) => {
   const [open, setOpen] = useState(false)
   const [openResult, setOpenResult] = useState(false)
   const [openImage, setOpenImage] = useState(false)
+  const [openEdit, setOpenEdit] = useState(false)
 
   const onClose = () => setOpen((old) => !old)
   const onCloseResult = () => setOpenResult((old) => !old)
   const onCloseImage = () => setOpenImage((old) => !old)
+  const onCloseEdit = () => setOpenEdit((old) => !old)
 
   return (
     <>
@@ -34,20 +41,27 @@ export const Data = ({ document, title, getDocs }: iDataProps) => {
         <Tooltip title={`Visualizar ${title}`}>
           <IconButton size="small" onClick={onClose}>
             <Avatar
-              src={document?.image.url}
+              src={document.image.url}
               sx={{ width: '150px', height: '150px' }}
             />
           </IconButton>
         </Tooltip>
         <Box p={1}>
           <Typography>
-            {document?.action.description}{' '}
+            {document.action.description}{' '}
             <Tooltip title="Detalhes">
               <IconButton color="primary" onClick={onCloseResult}>
                 <Loupe />
               </IconButton>
             </Tooltip>
-            {document?.status === 'REFUSED' && (
+            {document.status === 'CONFIRMED' && (
+              <Tooltip title="Alterar">
+                <IconButton color="info" onClick={onCloseEdit}>
+                  <Edit />
+                </IconButton>
+              </Tooltip>
+            )}
+            {document.status === 'REFUSED' && (
               <Tooltip title="Resolver">
                 <IconButton color="warning" onClick={onCloseImage}>
                   <Warning />
@@ -77,6 +91,13 @@ export const Data = ({ document, title, getDocs }: iDataProps) => {
         open={openImage}
         title={title}
         is_pending
+      />
+      <DialogEdit
+        document_id={document.id}
+        getDocs={getDocs}
+        onClose={onCloseEdit}
+        open={openEdit}
+        title={title}
       />
     </>
   )

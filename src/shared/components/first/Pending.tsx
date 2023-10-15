@@ -22,11 +22,10 @@ import {
 } from '../../../shared'
 
 interface iFirstPendingProps {
-  id: string
   record_id: string
 }
 
-export const FirstPending = ({ id, record_id }: iFirstPendingProps) => {
+export const FirstPending = ({ record_id }: iFirstPendingProps) => {
   const { profileUser } = useAuthContext()
   const { setLoading, handleSucess, handleError } = useAppThemeContext()
   const [open, setOpen] = useState(false)
@@ -40,8 +39,7 @@ export const FirstPending = ({ id, record_id }: iFirstPendingProps) => {
       if (data.avatar) dataImage.append('image', data.avatar)
       await apiImage.create(
         dataImage,
-        id,
-        `?category=MAT&key_record=${record_id}`,
+        `?category=MAT&key_record=${record_id}&title=Declaração da Instituição de Ensino ou Atestado de Matrícula`,
       )
       handleSucess('Dados cadastrados com sucesso')
       profileUser()

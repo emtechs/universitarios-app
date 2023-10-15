@@ -18,11 +18,7 @@ import {
   Glossary,
 } from '../../../shared'
 
-interface iFirstAdminProps {
-  id: string
-}
-
-export const FirstAdmin = ({ id }: iFirstAdminProps) => {
+export const FirstAdmin = () => {
   const { setLoading, handleSucess, handleError } = useAppThemeContext()
   const { handleUserProfile } = useAuthContext()
   const [open, setOpen] = useState(false)
@@ -31,7 +27,7 @@ export const FirstAdmin = ({ id }: iFirstAdminProps) => {
   const first = async (data: iUserFirstRequest) => {
     try {
       setLoading(true)
-      const user = await apiUser.update(id, data)
+      const user = await apiUser.updateAuth(data)
       handleSucess('Dados cadastrados com sucesso')
       handleUserProfile(user)
     } catch {

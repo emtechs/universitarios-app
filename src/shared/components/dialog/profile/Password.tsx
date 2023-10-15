@@ -6,17 +6,12 @@ import {
   BaseContentChildren,
   DialogBaseChildren,
   apiUser,
-  iUser,
   useDialogContext,
   iUserPasswordRequest,
   userPasswordSchema,
 } from '../../../../shared'
 
-interface iDialogEditPasswordProps {
-  user: iUser
-}
-
-export const DialogEditPassword = ({ user }: iDialogEditPasswordProps) => {
+export const DialogEditPassword = () => {
   const { openEdit, handleOpenEdit } = useDialogContext()
   const { setLoading, handleSucess, handleError } = useAppThemeContext()
 
@@ -24,7 +19,7 @@ export const DialogEditPassword = ({ user }: iDialogEditPasswordProps) => {
     try {
       handleOpenEdit()
       setLoading(true)
-      await apiUser.update(user.id, data)
+      await apiUser.updateAuth(data)
       handleSucess('Senha alterada com sucesso')
     } catch {
       handleError('Senha atual incorreta!')

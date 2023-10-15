@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   FormContainer,
   PasswordElement,
@@ -19,6 +19,7 @@ import {
   Glossary,
   InputFile,
   apiImage,
+  apiUsingNow,
 } from '../../shared'
 import dayjs from 'dayjs'
 import localizedFormat from 'dayjs/plugin/localizedFormat'
@@ -34,6 +35,17 @@ export const RegisterPage = () => {
   const [open, setOpen] = useState(false)
   const handleOpen = () => setOpen(!open)
 
+  useEffect(() => {
+    setLoading(true)
+    apiUsingNow
+      .get(`users/cpf/${cpf}?is_register=true`)
+      .catch(() => {
+        handleError('CPF já cadastrado!')
+        navigate(`/login?cpf=${cpf}`)
+      })
+      .finally(() => setLoading(false))
+  }, [cpf])
+
   if (isAuthenticated) return <Navigate to="/" />
 
   const create = async (data: iRegisterRequest) => {
@@ -45,7 +57,7 @@ export const RegisterPage = () => {
       )
       const dataImage = new FormData()
       if (data.avatar) dataImage.append('image', data.avatar)
-      await apiImage.create(dataImage, user.id, '?category=FT')
+      await apiImage.profile(dataImage, user.id, '?category=FT&title=Foto')
       handleSucess(
         'Cadastro realizado com sucesso. Faça login no sistema utilizando seu CPF e a senha cadastrada.',
       )

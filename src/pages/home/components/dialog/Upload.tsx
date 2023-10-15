@@ -10,6 +10,8 @@ import {
   iAvatarRequest,
   useAppThemeContext,
   apiStudent,
+  useAuthContext,
+  apiUser,
 } from '../../../../shared'
 
 interface iDialogUploadProps {
@@ -31,6 +33,7 @@ export const DialogUpload = ({
   onCloseImage,
   getDocs,
 }: iDialogUploadProps) => {
+  const { profileUser } = useAuthContext()
   const { setLoading, handleSucess, handleError } = useAppThemeContext()
 
   const updateImage = async (data: iAvatarRequest) => {
@@ -45,18 +48,19 @@ export const DialogUpload = ({
           status: 'RECEIVED',
           title,
         })
-        await apiStudent.updateRecordStatus(
-          {
-            status: 'RECEIVED',
-            justification: `${title} com pendências resolvidas`,
-          },
-          document.record_id,
-        )
+        const is_pending_data = await apiUser.pending(document.record_id)
+        if (!is_pending_data) {
+          await apiStudent.updateRecordStatus(
+            { status: 'RECEIVED' },
+            document.record_id,
+          )
+          profileUser()
+        }
       }
-      handleSucess('Foto alterada com sucesso')
+      handleSucess(`${title} alterado com sucesso`)
       getDocs()
     } catch {
-      handleError('Não foi possível atualizar a foto no momento!')
+      handleError(`Não foi possível atualizar ${title} no momento!`)
     } finally {
       setLoading(false)
     }

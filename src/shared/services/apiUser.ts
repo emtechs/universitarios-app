@@ -57,11 +57,19 @@ interface iDocumentsReturn {
   doc_ft_frente: iDocument
   doc_ft_verso: iDocument
   end: iDocument
+  is_pending: boolean
 }
 
 const documents = async (id: string): Promise<iDocumentsReturn> => {
   const { data: response } = await apiUsingNow.get<iDocumentsReturn>(
     `users/documents/${id}`,
+  )
+  return response
+}
+
+const pending = async (id: string): Promise<boolean> => {
+  const { data: response } = await apiUsingNow.get<boolean>(
+    `users/pending/${id}`,
   )
   return response
 }
@@ -118,6 +126,11 @@ const update = async (id: string, data: FieldValues): Promise<iUser> => {
   return response
 }
 
+const updateAuth = async (data: FieldValues): Promise<iUser> => {
+  const { data: response } = await apiUsingNow.patch<iUser>('users', data)
+  return response
+}
+
 interface iSchoolReturn {
   schools: iSchool[]
   total: number
@@ -149,4 +162,6 @@ export const apiUser = {
   destroy,
   documents,
   record,
+  updateAuth,
+  pending,
 }

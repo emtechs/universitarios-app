@@ -5,6 +5,7 @@ import {
   createSecretSchema,
   userFirstSchema,
   userPasswordSchema,
+  userRgSchema,
   userUpdateSchema,
 } from '../schemas'
 import { iWorkSchool } from './school.interface'
@@ -30,6 +31,8 @@ export interface iUserBase {
 export interface iUserProfile {
   id: string
   name: string
+  cpf: string
+  email: string
   role: iRole
   is_super: boolean
   is_first_access: boolean
@@ -47,8 +50,6 @@ export interface iUserProfile {
 
 export interface iUser extends iUserProfile {
   login: string
-  cpf: string
-  email: string
   is_active: boolean
   created_at: Date
   frequencies: number
@@ -100,3 +101,5 @@ export type iUserFirstRequest = z.infer<typeof userFirstSchema>
 export type iUserUpdateRequest = z.infer<typeof userUpdateSchema>
 
 export type iUserPasswordRequest = z.infer<typeof userPasswordSchema>
+
+export type iUserRgRequest = z.infer<typeof userRgSchema>

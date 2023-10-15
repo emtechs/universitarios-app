@@ -57,7 +57,12 @@ export const Documents = () => {
         </Box>
         <Divider />
         <Box p={1}>
-          <DisplayImage document={ftData} title="Foto" getDocs={getDocs} />
+          <DisplayImage
+            category="FT"
+            document={ftData}
+            title="Foto"
+            getDocs={getDocs}
+          />
           <DocFt
             frente={docFtData}
             verso={docFtBData}
@@ -65,11 +70,13 @@ export const Documents = () => {
             getDocs={getDocs}
           />
           <DisplayImage
+            category="END"
             document={endData}
             title="Comprovante de Endereço"
             getDocs={getDocs}
           />
           <DisplayImage
+            category="MAT"
             document={mtData}
             title="Declaração da Instituição de Ensino ou Atestado de Matrícula"
             getDocs={getDocs}

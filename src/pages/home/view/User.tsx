@@ -5,10 +5,10 @@ import {
   ChildrenLoading,
   DialogEditPassword,
   DialogEditProfile,
-  apiUser,
+  apiCalendar,
   iPeriod,
-  iUser,
   statusPtBr,
+  useAuthContext,
 } from '../../../shared'
 import dayjs from 'dayjs'
 import localizedFormat from 'dayjs/plugin/localizedFormat'
@@ -20,23 +20,18 @@ interface iUserProps {
 }
 
 export const User = ({ status }: iUserProps) => {
-  const [userData, setUserData] = useState<iUser>()
+  const { userProfile } = useAuthContext()
   const [periodData, setPeriodData] = useState<iPeriod>()
   const [loading, setLoading] = useState(false)
 
-  const getUser = () => {
-    setLoading(true)
-    apiUser
-      .page(`?date=${dayjs().format('DD/MM/YYYY')}`)
-      .then((res) => {
-        setUserData(res.user)
-        setPeriodData(res.period)
-      })
-      .finally(() => setLoading(false))
-  }
-
   useEffect(() => {
-    getUser()
+    if (userProfile?.record_id) {
+      setLoading(true)
+      apiCalendar
+        .retrievePeriod(userProfile.record_id)
+        .then((res) => setPeriodData(res))
+        .finally(() => setLoading(false))
+    }
   }, [])
 
   return (
@@ -83,7 +78,7 @@ export const User = ({ status }: iUserProps) => {
             </ChildrenLoading>
             <ChildrenLoading isLoading={loading}>
               <Typography variant="subtitle1" fontWeight="bolder">
-                {status || statusPtBr(userData?.status).toUpperCase()}
+                {status || statusPtBr(userProfile?.status).toUpperCase()}
               </Typography>
             </ChildrenLoading>
           </Box>
@@ -118,7 +113,7 @@ export const User = ({ status }: iUserProps) => {
             >
               Nome:{' '}
               <ChildrenLoading isLoading={loading}>
-                <Typography variant="subtitle2">{userData?.name}</Typography>
+                <Typography variant="subtitle2">{userProfile?.name}</Typography>
               </ChildrenLoading>
             </Typography>
             <Typography
@@ -130,7 +125,7 @@ export const User = ({ status }: iUserProps) => {
             >
               CPF:{' '}
               <ChildrenLoading width={100} isLoading={loading}>
-                <Typography variant="subtitle2">{userData?.cpf}</Typography>
+                <Typography variant="subtitle2">{userProfile?.cpf}</Typography>
               </ChildrenLoading>
             </Typography>
             <Typography
@@ -143,15 +138,15 @@ export const User = ({ status }: iUserProps) => {
               E-mail:{' '}
               <ChildrenLoading isLoading={loading}>
                 <Typography variant="subtitle2" noWrap>
-                  {userData?.email}
+                  {userProfile?.email}
                 </Typography>
               </ChildrenLoading>
             </Typography>
           </Box>
         </Box>
       </Grid>
-      {userData && <DialogEditProfile user={userData} getData={getUser} />}
-      {userData && <DialogEditPassword user={userData} />}
+      <DialogEditProfile />
+      <DialogEditPassword />
     </>
   )
 }

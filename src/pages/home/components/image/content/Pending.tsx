@@ -2,28 +2,25 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { AccordionDetails, Box, Button } from '@mui/material'
 import { FormContainer } from 'react-hook-form-mui'
 import {
-  iDocument,
   useAppThemeContext,
   iAvatarRequest,
   apiImage,
-  apiStudent,
   avatarSchema,
   InputFile,
+  iCategoryDoc,
+  useAuthContext,
+  apiUser,
+  apiStudent,
 } from '../../../../../shared'
 
 interface iPendingProps {
   title: string
-  document: iDocument
-  is_pending?: boolean
+  category: iCategoryDoc
   getDocs: () => void
 }
 
-export const Pending = ({
-  document,
-  title,
-  is_pending,
-  getDocs,
-}: iPendingProps) => {
+export const Pending = ({ category, getDocs, title }: iPendingProps) => {
+  const { userProfile, profileUser } = useAuthContext()
   const { setLoading, handleSucess, handleError } = useAppThemeContext()
 
   const updateImage = async (data: iAvatarRequest) => {
@@ -31,24 +28,21 @@ export const Pending = ({
       setLoading(true)
       const dataImage = new FormData()
       if (data.avatar) dataImage.append('image', data.avatar)
-      await apiImage.update(document.image.id, dataImage)
-      if (is_pending) {
-        await apiImage.updateStatus(document.id, {
-          status: 'RECEIVED',
-          title,
-        })
-        await apiStudent.updateRecordStatus(
-          {
-            status: 'RECEIVED',
-            justification: `${title} com pendências resolvidas`,
-          },
-          document.record_id,
-        )
+      await apiImage.create(dataImage, `?category=${category}&title=${title}`)
+      if (userProfile?.record_id) {
+        const is_pending = await apiUser.pending(userProfile.record_id)
+        if (!is_pending) {
+          await apiStudent.updateRecordStatus(
+            { status: 'RECEIVED' },
+            userProfile.record_id,
+          )
+          profileUser()
+        }
       }
-      handleSucess('Foto alterada com sucesso')
+      handleSucess(`${title} enviado com sucesso`)
       getDocs()
     } catch {
-      handleError('Não foi possível atualizar a foto no momento!')
+      handleError(`Não foi possível enviar ${title} no momento!`)
     } finally {
       setLoading(false)
     }

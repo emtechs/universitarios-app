@@ -16,7 +16,6 @@ import { useCallback, useEffect, useState } from 'react'
 import {
   useAuthContext,
   useAppThemeContext,
-  iUser,
   iUserUpdateRequest,
   apiUser,
   iAvatarRequest,
@@ -34,17 +33,16 @@ import {
 export const EditProfilePage = () => {
   const navigate = useNavigate()
   const { view } = useParams()
-  const { handleUserProfile } = useAuthContext()
+  const { handleUserProfile, userProfile } = useAuthContext()
   const { setLoading, handleSucess, handleError } = useAppThemeContext()
-  const [userData, setUserData] = useState<iUser>()
   const [open, setOpen] = useState(false)
 
   const onClose = () => setOpen((old) => !old)
 
-  const updateUser = async (id: string, data: iUserUpdateRequest) => {
+  const updateUser = async (data: iUserUpdateRequest) => {
     try {
       setLoading(true)
-      await apiUser.update(id, data)
+      await apiUser.updateAuth(data)
       handleSucess('Dados alterado com sucesso')
       getUser()
       navigate('/')
@@ -75,10 +73,7 @@ export const EditProfilePage = () => {
     setLoading(true)
     apiUser
       .page('')
-      .then((res) => {
-        setUserData(res.user)
-        handleUserProfile(res.user)
-      })
+      .then((res) => handleUserProfile(res.user))
       .finally(() => setLoading(false))
   }, [])
 
@@ -101,10 +96,11 @@ export const EditProfilePage = () => {
         }
       >
         <FormContainer
-          values={{ name: userData?.name || '', email: userData?.email || '' }}
-          onSuccess={(data) => {
-            if (userData) updateUser(userData.id, data)
+          values={{
+            name: userProfile?.name || '',
+            email: userProfile?.email || '',
           }}
+          onSuccess={updateUser}
           resolver={zodResolver(userUpdateSchema)}
         >
           <Box
@@ -131,7 +127,7 @@ export const EditProfilePage = () => {
                 <Tooltip title="Alterar foto">
                   <IconButton size="small" onClick={onClose}>
                     <Avatar
-                      src={userData?.profile?.url}
+                      src={userProfile?.profile?.url}
                       sx={{ width: '150px', height: '150px' }}
                     />
                   </IconButton>

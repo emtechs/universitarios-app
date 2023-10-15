@@ -3,7 +3,6 @@ import { Password } from '@mui/icons-material'
 import { FormContainer, PasswordElement } from 'react-hook-form-mui'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
-  useAuthContext,
   LayoutBasePage,
   userPasswordSchema,
   Footer,
@@ -18,12 +17,11 @@ import { useNavigate } from 'react-router-dom'
 export const EditPasswordPage = () => {
   const navigate = useNavigate()
   const { setLoading, handleSucess, handleError } = useAppThemeContext()
-  const { userProfile } = useAuthContext()
 
-  const editPassword = async (id: string, data: iUserPasswordRequest) => {
+  const editPassword = async (data: iUserPasswordRequest) => {
     try {
       setLoading(true)
-      await apiUser.update(id, data)
+      await apiUser.updateAuth(data)
       handleSucess('Senha alterada com sucesso')
       navigate('/')
     } catch {
@@ -47,9 +45,7 @@ export const EditPasswordPage = () => {
       }
     >
       <FormContainer
-        onSuccess={(data) => {
-          if (userProfile) editPassword(userProfile.id, data)
-        }}
+        onSuccess={editPassword}
         resolver={zodResolver(userPasswordSchema)}
       >
         <Box

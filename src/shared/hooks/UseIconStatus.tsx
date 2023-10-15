@@ -11,7 +11,7 @@ import { Tooltip } from '@mui/material'
 
 export const useIconStatus = () => {
   const defineIconStatus = useCallback(
-    (status: iStatus = 'RECEIVED') => {
+    (status: iStatus) => {
       switch (status) {
         case 'ANALYZING':
           return (

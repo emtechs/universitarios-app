@@ -50,6 +50,14 @@ const listPeriod = async (query: string): Promise<iListPeriodReturn> => {
   return response
 }
 
+const retrievePeriod = async (id: string): Promise<iPeriod> => {
+  const { data: response } = await apiUsingNow.get<iPeriod>(
+    `/calendar/period/${id}`,
+  )
+
+  return response
+}
+
 const updatePeriod = async (
   data: FieldValues,
   id: string,
@@ -69,4 +77,5 @@ export const apiCalendar = {
   listYear,
   listPeriod,
   updatePeriod,
+  retrievePeriod,
 }

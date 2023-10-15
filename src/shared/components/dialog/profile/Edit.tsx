@@ -6,21 +6,14 @@ import {
   BaseContentChildren,
   DialogBaseChildren,
   apiUser,
-  iUser,
   iUserUpdateRequest,
   useDialogContext,
   userUpdateSchema,
-  iDialogDataProps,
+  useAuthContext,
 } from '../../../../shared'
 
-interface iDialogEditProfileProps extends iDialogDataProps {
-  user: iUser
-}
-
-export const DialogEditProfile = ({
-  user,
-  getData,
-}: iDialogEditProfileProps) => {
+export const DialogEditProfile = () => {
+  const { profileUser, userProfile } = useAuthContext()
   const { openCreate, handleOpenCreate } = useDialogContext()
   const { setLoading, handleSucess, handleError } = useAppThemeContext()
 
@@ -28,9 +21,9 @@ export const DialogEditProfile = ({
     try {
       handleOpenCreate()
       setLoading(true)
-      await apiUser.update(user.id, data)
+      await apiUser.updateAuth(data)
       handleSucess('Dados alterado com sucesso')
-      getData && getData()
+      profileUser()
     } catch {
       handleError('Não foi possível atualizar os dados no momento!')
     } finally {
@@ -46,7 +39,7 @@ export const DialogEditProfile = ({
       description=""
     >
       <FormContainer
-        defaultValues={{ name: user.name, email: user.email }}
+        defaultValues={{ name: userProfile?.name, email: userProfile?.email }}
         onSuccess={updateUser}
         resolver={zodResolver(userUpdateSchema)}
       >

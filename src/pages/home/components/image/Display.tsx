@@ -1,10 +1,11 @@
 import { ExpandMore } from '@mui/icons-material'
 import { Typography, Accordion, AccordionSummary } from '@mui/material'
-import { iDocument, useIconStatus } from '../../../../shared'
-import { Base } from './content'
+import { iCategoryDoc, iDocument, useIconStatus } from '../../../../shared'
+import { Data, Pending } from './content'
 
 interface iDisplayImageProps {
   title: string
+  category: iCategoryDoc
   getDocs: () => void
   document?: iDocument
 }
@@ -13,6 +14,7 @@ export const DisplayImage = ({
   document,
   getDocs,
   title,
+  category,
 }: iDisplayImageProps) => {
   const { defineIconStatus } = useIconStatus()
 
@@ -26,11 +28,17 @@ export const DisplayImage = ({
           alignItems="center"
           gap={1}
         >
-          {defineIconStatus(document?.status)}
+          {document
+            ? defineIconStatus(document.status)
+            : defineIconStatus('PENDING')}
           {title}
         </Typography>
       </AccordionSummary>
-      {document && <Base document={document} getDocs={getDocs} title={title} />}
+      {document ? (
+        <Data document={document} title={title} getDocs={getDocs} />
+      ) : (
+        <Pending category={category} getDocs={getDocs} title={title} />
+      )}
     </Accordion>
   )
 }

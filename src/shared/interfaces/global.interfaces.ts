@@ -77,3 +77,5 @@ export interface iTable extends iTableBase {
 export type iLocale = 'list' | 'data'
 
 export type iAvatarRequest = z.infer<typeof avatarSchema>
+
+export type iCategoryDoc = 'FT' | 'MAT' | 'DOC' | 'END'

@@ -11,12 +11,12 @@ export const First = ({ children }: iChildren) => {
       userProfile.is_pending &&
       userProfile.record_id
     )
-      return (
-        <FirstPending id={userProfile.id} record_id={userProfile.record_id} />
-      )
+      return <FirstPending record_id={userProfile.record_id} />
 
     if (!userProfile.is_first_access) return <>{children}</>
+
+    if (userProfile.is_first_access) return <FirstAdmin />
   }
 
-  return <>{userProfile ? <FirstAdmin id={userProfile.id} /> : <></>}</>
+  return <></>
 }
