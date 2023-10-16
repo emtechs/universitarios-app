@@ -1,3 +1,4 @@
+export * from './Base'
 export * from './Class'
 export * from './Frequency'
 export * from './Infrequency'

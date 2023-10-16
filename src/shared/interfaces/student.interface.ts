@@ -67,6 +67,8 @@ export interface iRecord {
   created_at: Date
   school: iDataBase
   user: iUserBase
+  period: iDataBase
+  analyst?: iUserBase
 }
 
 export interface iAction {

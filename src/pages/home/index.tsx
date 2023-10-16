@@ -3,11 +3,7 @@ import { useAuthContext } from '../../shared'
 import { HomePageAdmin, Base, Documents, Data, User, Result } from './view'
 import { useMemo } from 'react'
 
-interface iHomePageProps {
-  isHome?: boolean
-}
-
-export const HomePage = ({ isHome }: iHomePageProps) => {
+export const HomePage = () => {
   const { isAuthenticated, userProfile } = useAuthContext()
 
   const data = useMemo(() => {
@@ -39,7 +35,7 @@ export const HomePage = ({ isHome }: iHomePageProps) => {
 
   if (!isAuthenticated) return <Navigate to="/login" />
 
-  if (userProfile?.role === 'ADMIN' && !isHome) return <HomePageAdmin />
+  if (userProfile?.role === 'ADMIN') return <HomePageAdmin />
 
-  return <Base isHome={isHome}>{data}</Base>
+  return <Base>{data}</Base>
 }

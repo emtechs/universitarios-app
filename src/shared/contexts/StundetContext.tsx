@@ -1,5 +1,12 @@
 import { FieldValues } from 'react-hook-form'
-import { createContext, useCallback, useContext, useState } from 'react'
+import {
+  Dispatch,
+  SetStateAction,
+  createContext,
+  useCallback,
+  useContext,
+  useState,
+} from 'react'
 import { useNavigate } from 'react-router-dom'
 import {
   iStudentRequest,
@@ -10,6 +17,9 @@ import {
   useParamsContext,
   usePaginationContext,
   apiStudent,
+  iSelectBase,
+  iRecord,
+  apiRecord,
 } from '../../shared'
 
 interface iStudentContextData {
@@ -30,6 +40,11 @@ interface iStudentContextData {
   ) => Promise<void>
   listData: iStudent[]
   getStudents: (query: string, isPage?: boolean) => void
+  recordSelect: iSelectBase | undefined
+  setRecordSelect: Dispatch<SetStateAction<iSelectBase | undefined>>
+  loadingRecord: boolean
+  recordRetrieve: iRecord | undefined
+  recordDataRetrieve: (id: string) => void
 }
 
 const StudentContext = createContext({} as iStudentContextData)
@@ -40,6 +55,17 @@ export const StudentProvider = ({ children }: iChildren) => {
   const { setIsLoading } = useParamsContext()
   const { setFace, setCount } = usePaginationContext()
   const [listData, setListData] = useState<iStudent[]>([])
+  const [recordSelect, setRecordSelect] = useState<iSelectBase>()
+  const [loadingRecord, setLoadingRecord] = useState(true)
+  const [recordRetrieve, setRecordRetrieve] = useState<iRecord>()
+
+  const recordDataRetrieve = useCallback((id: string) => {
+    setLoadingRecord(true)
+    apiRecord
+      .retrieve(id)
+      .then((res) => setRecordRetrieve(res))
+      .finally(() => setLoadingRecord(false))
+  }, [])
 
   const getStudents = useCallback((query: string, isPage?: boolean) => {
     setIsLoading(true)
@@ -136,6 +162,11 @@ export const StudentProvider = ({ children }: iChildren) => {
         importStudentAll: handleImportStudentAll,
         getStudents,
         listData,
+        recordSelect,
+        setRecordSelect,
+        loadingRecord,
+        recordDataRetrieve,
+        recordRetrieve,
       }}
     >
       {children}

@@ -1,9 +1,12 @@
 import { Chip, Skeleton } from '@mui/material'
 import { Workspaces } from '@mui/icons-material'
-import { useAppThemeContext, useClassContext } from '../../contexts'
-import { iLabelBaseProps } from '../../interfaces'
-import { adaptNameSchool } from '../../scripts'
-import { LinkChip } from '../link'
+import {
+  iLabelBaseProps,
+  useAppThemeContext,
+  useClassContext,
+  adaptNameSchool,
+  LinkChip,
+} from '../../../shared'
 
 export const LabelClass = ({ clickable, to }: iLabelBaseProps) => {
   const { mdDown, loading } = useAppThemeContext()

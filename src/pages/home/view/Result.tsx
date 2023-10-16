@@ -11,7 +11,7 @@ import {
   Typography,
 } from '@mui/material'
 import {
-  apiStudent,
+  apiRecord,
   apiUser,
   iAction,
   useAppThemeContext,
@@ -49,7 +49,7 @@ export const Result = ({ is_block }: iResultProps) => {
         .finally(() => setIsLoading(false))
     } else if (userProfile?.record_id) {
       setIsLoading(true)
-      apiStudent
+      apiRecord
         .actions(userProfile.record_id)
         .then((res) => {
           setlistData(res.result)

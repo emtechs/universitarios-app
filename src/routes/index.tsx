@@ -1,31 +1,30 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import {
   ClassPage,
-  DashboardSchoolPage,
-  DataDashboardSchoolPage,
+  DisplayRecordPage,
   EditPasswordPage,
   EditProfilePage,
   FrequencyPage,
   HomeAuthPage,
-  HomePage,
   LoginPage,
   PasswordPage,
   PeriodPage,
+  RecordPage,
   RegisterPage,
   RequestPage,
   RetrieveClassPage,
   RetrievePeriodPage,
+  RetrieveRecordPage,
   RetrieveSchoolPage,
   RetrieveUserPage,
   SchoolPage,
   StudentPage,
   UserPage,
   ViewClassPage,
-  ViewDashboardSchoolPage,
   ViewSchoolPage,
   ViewUserPage,
 } from '../pages'
-import { ProtectedAdmin, ProtectedAuth } from '../shared/components'
+import { ProtectedAdmin, ProtectedAuth } from '../shared'
 
 const AppRoutes = () => {
   return (
@@ -36,7 +35,6 @@ const AppRoutes = () => {
       <Route path="/password/:userId/:token" element={<PasswordPage />} />
       <Route element={<ProtectedAuth />}>
         <Route element={<ProtectedAdmin />}>
-          <Route path="/dash" element={<HomePage isHome />} />
           <Route path="/user" element={<UserPage />}>
             <Route path=":user_id" element={<RetrieveUserPage />}>
               <Route path=":view" element={<ViewUserPage />} />
@@ -61,12 +59,12 @@ const AppRoutes = () => {
           <Route path="/period" element={<PeriodPage />}>
             <Route path=":year_id" element={<RetrievePeriodPage />} />
           </Route>
-          <Route path="/request" element={<RequestPage />} />
-        </Route>
-        <Route path="/:school_id" element={<DashboardSchoolPage />}>
-          <Route path=":view" element={<ViewDashboardSchoolPage />}>
-            <Route path=":id" element={<DataDashboardSchoolPage />} />
+          <Route path="/record" element={<RecordPage />}>
+            <Route path=":record_id" element={<RetrieveRecordPage />}>
+              <Route path=":view" element={<DisplayRecordPage />} />
+            </Route>
           </Route>
+          <Route path="/request" element={<RequestPage />} />
         </Route>
         <Route path="/profile/edit" element={<EditProfilePage />}>
           <Route path=":view" element={<EditPasswordPage />} />

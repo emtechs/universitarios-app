@@ -1,18 +1,6 @@
 import { FieldValues } from 'react-hook-form'
-import { iAction, iRecord, iStudent, iStudentResume } from '../interfaces'
+import { iStudent, iStudentResume } from '../interfaces'
 import { apiUsingNow } from './api'
-
-interface iActionsReturn {
-  total: number
-  result: iAction[]
-}
-
-const actions = async (record_id: string): Promise<iActionsReturn> => {
-  const { data: response } = await apiUsingNow.get<iActionsReturn>(
-    `students/actions/${record_id}`,
-  )
-  return response
-}
 
 const create = async (data: FieldValues, query?: string): Promise<iStudent> => {
   const { data: response } = await apiUsingNow.post<iStudent>(
@@ -55,28 +43,6 @@ const updateInfreq = async (data: FieldValues): Promise<iStudent> => {
   return response
 }
 
-const updateRecord = async (
-  data: FieldValues,
-  key: string,
-): Promise<iStudent> => {
-  const { data: response } = await apiUsingNow.patch<iStudent>(
-    `students/record/${key}`,
-    data,
-  )
-  return response
-}
-
-const updateRecordStatus = async (
-  data: FieldValues,
-  key: string,
-): Promise<iStudent> => {
-  const { data: response } = await apiUsingNow.patch<iStudent>(
-    `students/record/${key}/status`,
-    data,
-  )
-  return response
-}
-
 const impStudent = async (
   data: FormData,
   class_id: string,
@@ -101,29 +67,13 @@ const resume = async (year_id: string, query: string): Promise<iResume> => {
   return response
 }
 
-interface iRecords {
-  total: number
-  result: iRecord[]
-}
-
-const records = async (query: string): Promise<iRecords> => {
-  const { data: response } = await apiUsingNow.get<iRecords>(
-    `students/record${query}`,
-  )
-  return response
-}
-
 export const apiStudent = {
-  actions,
   create,
   update,
   updateInfreq,
-  updateRecord,
   impStudent,
   impStudentAll,
   list,
   listClass,
   resume,
-  records,
-  updateRecordStatus,
 }

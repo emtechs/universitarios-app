@@ -1,6 +1,7 @@
 export * from './Class'
 export * from './Frequency'
 export * from './Profile'
+export * from './Record'
 export * from './School'
 export * from './User'
 export * from './Year'

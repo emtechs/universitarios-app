@@ -6,6 +6,7 @@ import {
   Home,
   LibraryAddCheck,
   People,
+  Rule,
   School,
   Today,
   Workspaces,
@@ -27,8 +28,19 @@ export const OptionsAdmin = () => {
               <LibraryAddCheck />
             </Badge>
           }
-          label="Novos Registros"
-          to="record"
+          label="Recebidos"
+          to="record/RECEIVED"
+        />
+      )}
+      {userProfile && userProfile.analysis > 0 && (
+        <OtherListItemLink
+          icon={
+            <Badge badgeContent={userProfile.analysis} color="primary">
+              <Rule />
+            </Badge>
+          }
+          label="Em Análise"
+          to={`/record/ANALYZING?analyst_id=${userProfile.id}`}
         />
       )}
       <OtherListItemLink icon={<Home />} label="Página Inicial" />

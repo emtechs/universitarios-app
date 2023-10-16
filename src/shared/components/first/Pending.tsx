@@ -14,7 +14,7 @@ import {
   Glossary,
   InputFile,
   apiImage,
-  apiStudent,
+  apiRecord,
   iRecordUpdateRequest,
   recordUpdateSchema,
   useAppThemeContext,
@@ -34,7 +34,7 @@ export const FirstPending = ({ record_id }: iFirstPendingProps) => {
   const first = async (data: iRecordUpdateRequest) => {
     try {
       setLoading(true)
-      await apiStudent.updateRecord(data, record_id)
+      await apiRecord.update(data, record_id)
       const dataImage = new FormData()
       if (data.avatar) dataImage.append('image', data.avatar)
       await apiImage.create(

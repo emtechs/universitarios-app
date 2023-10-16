@@ -1,10 +1,13 @@
 import { Chip, Skeleton } from '@mui/material'
 import { School } from '@mui/icons-material'
 import { useMemo } from 'react'
-import { useAppThemeContext, useSchoolContext } from '../../contexts'
-import { iLabelBaseProps } from '../../interfaces'
-import { adaptNameSchool } from '../../scripts'
-import { LinkChip } from '../link'
+import {
+  iLabelBaseProps,
+  useAppThemeContext,
+  useSchoolContext,
+  adaptNameSchool,
+  LinkChip,
+} from '../../../shared'
 
 export const LabelSchool = ({ clickable, isSchool }: iLabelBaseProps) => {
   const { mdDown, loading } = useAppThemeContext()

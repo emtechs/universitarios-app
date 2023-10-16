@@ -11,8 +11,8 @@ import {
   apiFrequency,
   useAuthContext,
   useParamsContext,
-  apiStudent,
   iRecord,
+  apiRecord,
 } from '../../shared'
 import { ViewRequestPage } from './view'
 import { ButtonRequestPage } from './components'
@@ -26,8 +26,8 @@ export const RequestPage = () => {
 
   const getRequest = useCallback(() => {
     setIsLoading(true)
-    apiStudent
-      .records('')
+    apiRecord
+      .list('')
       .then((res) => {
         setRequestData(res.result)
         setCount(res.total)

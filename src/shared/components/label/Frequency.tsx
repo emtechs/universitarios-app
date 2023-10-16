@@ -1,9 +1,12 @@
 import { Chip, Skeleton } from '@mui/material'
 import { Workspaces } from '@mui/icons-material'
-import { useAppThemeContext, useFrequencyContext } from '../../contexts'
-import { iLabelBaseProps } from '../../interfaces'
-import { adaptNameSchool } from '../../scripts'
-import { LinkChip } from '../link'
+import {
+  iLabelBaseProps,
+  useAppThemeContext,
+  useFrequencyContext,
+  adaptNameSchool,
+  LinkChip,
+} from '../../../shared'
 
 export const LabelFrequency = ({ clickable, to }: iLabelBaseProps) => {
   const { mdDown, loading } = useAppThemeContext()

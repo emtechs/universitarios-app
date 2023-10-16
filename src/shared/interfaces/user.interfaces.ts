@@ -46,6 +46,7 @@ export interface iUserProfile {
   status?: iStatus
   is_open: boolean
   records: number
+  analysis: number
 }
 
 export interface iUser extends iUserProfile {

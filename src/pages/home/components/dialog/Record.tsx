@@ -9,18 +9,34 @@ export const DialogRecord = () => {
 
   const onClose = () => setOpen((old) => !old)
 
-  const action = () => navigate('/request')
+  if (userProfile && userProfile.analysis > 0) {
+    const action = () =>
+      navigate(`/record/ANALYZING?analyst_id=${userProfile.id}`)
+    return (
+      <DialogBase
+        open={open}
+        onClose={onClose}
+        title={'Registros Em Análise'}
+        description={'Você possui registros aguardando resposta.'}
+        action={action}
+        actionTitle="Verificar"
+      />
+    )
+  }
 
-  return userProfile && userProfile.records > 0 ? (
-    <DialogBase
-      open={open}
-      onClose={onClose}
-      title={'Novos Registros'}
-      description={'Você possui novos registros aguardando análise.'}
-      action={action}
-      actionTitle="Verificar"
-    />
-  ) : (
-    <></>
-  )
+  if (userProfile && userProfile.records > 0) {
+    const action = () => navigate('/record/RECEIVED')
+    return (
+      <DialogBase
+        open={open}
+        onClose={onClose}
+        title={'Registros Recebidos'}
+        description={'Você possui registros aguardando análise.'}
+        action={action}
+        actionTitle="Verificar"
+      />
+    )
+  }
+
+  return <></>
 }

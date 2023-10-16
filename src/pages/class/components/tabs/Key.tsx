@@ -1,6 +1,6 @@
 import { Groups, Workspaces } from '@mui/icons-material'
 import { useParams } from 'react-router-dom'
-import { TabsBase } from '../../../../shared/components/tabs/Base'
+import { TabsBase } from '../../../../shared'
 
 interface iTabsClassKeyPageProps {
   value?: string

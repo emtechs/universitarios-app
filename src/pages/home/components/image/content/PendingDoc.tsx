@@ -10,8 +10,8 @@ import {
   apiImage,
   iUserRgRequest,
   apiUser,
-  apiStudent,
   useAuthContext,
+  apiRecord,
 } from '../../../../../shared'
 
 interface iPendingDocProps {
@@ -39,7 +39,7 @@ export const PendingDoc = ({ title, getDocs }: iPendingDocProps) => {
       if (userProfile?.record_id) {
         const is_pending = await apiUser.pending(userProfile.record_id)
         if (!is_pending) {
-          await apiStudent.updateRecordStatus(
+          await apiRecord.updateStatus(
             { status: 'RECEIVED' },
             userProfile.record_id,
           )

@@ -1,8 +1,11 @@
 import { Chip, Skeleton } from '@mui/material'
-import { useAppThemeContext, useCalendarContext } from '../../contexts'
-import { iLabelBaseProps } from '../../interfaces'
 import { Today } from '@mui/icons-material'
-import { LinkChip } from '../link'
+import {
+  LinkChip,
+  iLabelBaseProps,
+  useAppThemeContext,
+  useCalendarContext,
+} from '../../../shared'
 
 export const LabelYear = ({ clickable, to }: iLabelBaseProps) => {
   const { loading } = useAppThemeContext()

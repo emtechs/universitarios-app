@@ -9,9 +9,9 @@ import {
   apiImage,
   iAvatarRequest,
   useAppThemeContext,
-  apiStudent,
   useAuthContext,
   apiUser,
+  apiRecord,
 } from '../../../../shared'
 
 interface iDialogUploadProps {
@@ -50,7 +50,7 @@ export const DialogUpload = ({
         })
         const is_pending_data = await apiUser.pending(document.record_id)
         if (!is_pending_data) {
-          await apiStudent.updateRecordStatus(
+          await apiRecord.updateStatus(
             { status: 'RECEIVED' },
             document.record_id,
           )

@@ -2,8 +2,8 @@ import {
   DialogBase,
   useAppThemeContext,
   apiImage,
-  apiStudent,
   useAuthContext,
+  apiRecord,
 } from '../../../../shared'
 
 interface iDialogEditProps {
@@ -30,7 +30,7 @@ export const DialogEdit = ({
       setLoading(true)
       await apiImage.destroyDoc(document_id)
       if (userProfile?.record_id) {
-        await apiStudent.updateRecordStatus(
+        await apiRecord.updateStatus(
           { status: 'PENDING', justification: `Solicitado Novo ${title}` },
           userProfile.record_id,
         )
