@@ -33,6 +33,7 @@ export const DialogEdit = ({
         await apiRecord.updateStatus(
           { status: 'PENDING', justification: `Solicitado Novo ${title}` },
           userProfile.record_id,
+          '',
         )
         profileUser()
       }

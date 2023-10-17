@@ -91,6 +91,12 @@ export interface iDocument {
   action: iAction
 }
 
+export interface iDocumentID {
+  status: iStatus
+  frente: iDocument
+  verso: iDocument
+}
+
 export type iUserAdmRequest = z.infer<typeof createAdmSchema>
 
 export type iUserDirectorRequest = z.infer<typeof createDirectorSchema>

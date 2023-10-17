@@ -3,6 +3,7 @@ import { apiUsingNow } from './api'
 import {
   iAction,
   iDocument,
+  iDocumentID,
   iPeriod,
   iRecord,
   iSchool,
@@ -54,8 +55,7 @@ const retrieve = async (id: string, query: string): Promise<iUser> => {
 interface iDocumentsReturn {
   foto: iDocument
   matricula: iDocument
-  doc_ft_frente: iDocument
-  doc_ft_verso: iDocument
+  doc_id: iDocumentID
   end: iDocument
   is_pending: boolean
 }

@@ -4,6 +4,7 @@ import { Box, Divider, Grid, Paper, Typography } from '@mui/material'
 import {
   apiUser,
   iDocument,
+  iDocumentID,
   useAppThemeContext,
   useAuthContext,
 } from '../../../shared'
@@ -15,8 +16,7 @@ export const Documents = () => {
   const { userProfile } = useAuthContext()
   const [ftData, setFtData] = useState<iDocument>()
   const [mtData, setMtData] = useState<iDocument>()
-  const [docFtData, setDocFtData] = useState<iDocument>()
-  const [docFtBData, setDocFtBData] = useState<iDocument>()
+  const [docIDData, setDocIDData] = useState<iDocumentID>()
   const [endData, setEndData] = useState<iDocument>()
 
   const getDocs = () => {
@@ -24,8 +24,7 @@ export const Documents = () => {
       apiUser.documents(userProfile.record_id).then((res) => {
         setFtData(res.foto)
         setMtData(res.matricula)
-        setDocFtData(res.doc_ft_frente)
-        setDocFtBData(res.doc_ft_verso)
+        setDocIDData(res.doc_id)
         setEndData(res.end)
       })
   }
@@ -64,8 +63,7 @@ export const Documents = () => {
             getDocs={getDocs}
           />
           <DocFt
-            frente={docFtData}
-            verso={docFtBData}
+            docID={docIDData}
             title="Documento de Identificação com Foto"
             getDocs={getDocs}
           />

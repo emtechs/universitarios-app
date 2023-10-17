@@ -1,5 +1,11 @@
 import { FieldValues } from 'react-hook-form'
-import { iAction, iDocument, iRecord } from '../interfaces'
+import {
+  iAction,
+  iDocument,
+  iDocumentID,
+  iRecord,
+  iStatus,
+} from '../interfaces'
 import { apiUsingNow } from './api'
 
 interface iActionsReturn {
@@ -17,8 +23,7 @@ const actions = async (record_id: string): Promise<iActionsReturn> => {
 interface iDocumentsReturn {
   foto: iDocument
   matricula: iDocument
-  doc_ft_frente: iDocument
-  doc_ft_verso: iDocument
+  doc_id: iDocumentID
   end: iDocument
   is_pending: boolean
 }
@@ -26,6 +31,18 @@ interface iDocumentsReturn {
 const documents = async (record_id: string): Promise<iDocumentsReturn> => {
   const { data: response } = await apiUsingNow.get<iDocumentsReturn>(
     `records/${record_id}/documents`,
+  )
+  return response
+}
+
+interface iPendingReturn {
+  is_pending: boolean
+  status: iStatus
+}
+
+const pending = async (record_id: string): Promise<iPendingReturn> => {
+  const { data: response } = await apiUsingNow.get<iPendingReturn>(
+    `records/${record_id}/pending`,
   )
   return response
 }
@@ -46,9 +63,10 @@ const update = async (data: FieldValues, key: string): Promise<iRecord> => {
 const updateStatus = async (
   data: FieldValues,
   key: string,
+  query: string,
 ): Promise<iRecord> => {
   const { data: response } = await apiUsingNow.patch<iRecord>(
-    `records/${key}/status`,
+    `records/${key}/status${query}`,
     data,
   )
   return response
@@ -73,4 +91,5 @@ export const apiRecord = {
   updateStatus,
   retrieve,
   documents,
+  pending,
 }

@@ -1,15 +1,23 @@
 import { ExpandMore } from '@mui/icons-material'
 import { Typography, Accordion, AccordionSummary } from '@mui/material'
-import { iCategoryDoc, iDocument, useIconStatus } from '../../../../shared'
+import { iDocument, useIconStatus } from '../../../../shared'
 import { Data } from './Data'
 
 interface iDisplayImageProps {
+  record_id: string
   title: string
-  category: iCategoryDoc
   document?: iDocument
+  is_analyzing?: boolean
+  getData?: () => void
 }
 
-export const DisplayImage = ({ document, title }: iDisplayImageProps) => {
+export const DisplayImage = ({
+  record_id,
+  title,
+  document,
+  getData,
+  is_analyzing,
+}: iDisplayImageProps) => {
   const { defineIconStatus } = useIconStatus()
 
   return (
@@ -28,7 +36,15 @@ export const DisplayImage = ({ document, title }: iDisplayImageProps) => {
           {title}
         </Typography>
       </AccordionSummary>
-      {document && <Data document={document} title={title} />}
+      {document && (
+        <Data
+          record_id={record_id}
+          document={document}
+          title={title}
+          is_analyzing={is_analyzing}
+          getData={getData}
+        />
+      )}
     </Accordion>
   )
 }

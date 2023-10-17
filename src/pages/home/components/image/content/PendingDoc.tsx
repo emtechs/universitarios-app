@@ -42,6 +42,7 @@ export const PendingDoc = ({ title, getDocs }: iPendingDocProps) => {
           await apiRecord.updateStatus(
             { status: 'RECEIVED' },
             userProfile.record_id,
+            '',
           )
           profileUser()
         }

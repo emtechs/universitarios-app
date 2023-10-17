@@ -53,6 +53,7 @@ export const DialogUpload = ({
           await apiRecord.updateStatus(
             { status: 'RECEIVED' },
             document.record_id,
+            '',
           )
           profileUser()
         }

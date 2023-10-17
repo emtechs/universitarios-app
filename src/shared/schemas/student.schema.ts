@@ -83,3 +83,9 @@ export const studentSchoolCreateSchema = studentSchema
     class_id: z.string().uuid().optional(),
   })
   .refine((fields) => (fields.class_id = fields.class.id))
+
+export const recordDocUpdateSchema = z.object({
+  justification: z
+    .string({ required_error: 'Justificativa obrigatória' })
+    .min(1, 'Justificativa obrigatória'),
+})

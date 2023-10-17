@@ -1,15 +1,23 @@
 import { ExpandMore } from '@mui/icons-material'
 import { Accordion, AccordionSummary, Typography } from '@mui/material'
-import { iDocument, useIconStatus } from '../../../../shared'
+import { iDocumentID, useIconStatus } from '../../../../shared'
 import { Data } from './Data'
 
 interface iDocFtProps {
+  record_id: string
   title: string
-  frente?: iDocument
-  verso?: iDocument
+  docID?: iDocumentID
+  is_analyzing?: boolean
+  getData?: () => void
 }
 
-export const DocFt = ({ frente, title, verso }: iDocFtProps) => {
+export const DocFt = ({
+  record_id,
+  title,
+  docID,
+  getData,
+  is_analyzing,
+}: iDocFtProps) => {
   const { defineIconStatus } = useIconStatus()
 
   return (
@@ -22,16 +30,26 @@ export const DocFt = ({ frente, title, verso }: iDocFtProps) => {
           alignItems="center"
           gap={1}
         >
-          {frente
-            ? defineIconStatus(frente.status)
-            : defineIconStatus('PENDING')}
+          {docID ? defineIconStatus(docID.status) : defineIconStatus('PENDING')}
           {title}
         </Typography>
       </AccordionSummary>
-      {frente && verso && (
+      {docID && (
         <>
-          <Data document={frente} title={`${title} - Frente`} />
-          <Data document={verso} title={`${title} - Verso`} />
+          <Data
+            record_id={record_id}
+            document={docID.frente}
+            title={`${title} - Frente`}
+            is_analyzing={is_analyzing}
+            getData={getData}
+          />
+          <Data
+            record_id={record_id}
+            document={docID.verso}
+            title={`${title} - Verso`}
+            is_analyzing={is_analyzing}
+            getData={getData}
+          />
         </>
       )}
     </Accordion>

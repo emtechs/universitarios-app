@@ -51,7 +51,8 @@ export const RecordPage = () => {
     (comp: string) => {
       const query = '?by=asc' + comp + query_page()
 
-      if (record_id) return `${query}&status=${record_id}`
+      if (record_id && !z.string().uuid().safeParse(record_id).success)
+        return `${query}&status=${record_id}`
 
       return query
     },

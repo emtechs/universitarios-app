@@ -1,16 +1,15 @@
 import { ExpandMore } from '@mui/icons-material'
 import { Accordion, AccordionSummary, Typography } from '@mui/material'
-import { iDocument, useIconStatus } from '../../../../shared'
+import { iDocumentID, useIconStatus } from '../../../../shared'
 import { BaseDoc, PendingDoc } from './content'
 
 interface iDocFtProps {
   title: string
   getDocs: () => void
-  frente?: iDocument
-  verso?: iDocument
+  docID?: iDocumentID
 }
 
-export const DocFt = ({ frente, getDocs, title, verso }: iDocFtProps) => {
+export const DocFt = ({ getDocs, title, docID }: iDocFtProps) => {
   const { defineIconStatus } = useIconStatus()
 
   return (
@@ -23,16 +22,14 @@ export const DocFt = ({ frente, getDocs, title, verso }: iDocFtProps) => {
           alignItems="center"
           gap={1}
         >
-          {frente
-            ? defineIconStatus(frente.status)
-            : defineIconStatus('PENDING')}
+          {docID ? defineIconStatus(docID.status) : defineIconStatus('PENDING')}
           {title}
         </Typography>
       </AccordionSummary>
-      {frente && verso ? (
+      {docID ? (
         <BaseDoc
-          frente={frente}
-          verso={verso}
+          frente={docID.frente}
+          verso={docID.verso}
           getDocs={getDocs}
           title={title}
         />

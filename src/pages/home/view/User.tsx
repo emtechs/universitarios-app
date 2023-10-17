@@ -25,10 +25,10 @@ export const User = ({ status }: iUserProps) => {
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    if (userProfile?.record_id) {
+    if (userProfile?.period_id) {
       setLoading(true)
       apiCalendar
-        .retrievePeriod(userProfile.record_id)
+        .retrievePeriod(userProfile.period_id)
         .then((res) => setPeriodData(res))
         .finally(() => setLoading(false))
     }

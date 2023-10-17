@@ -40,7 +40,7 @@ export const OptionsAdmin = () => {
             </Badge>
           }
           label="Em Análise"
-          to={`/record/ANALYZING?analyst_id=${userProfile.id}`}
+          to={`record/ANALYZING?analyst_id=${userProfile.id}`}
         />
       )}
       <OtherListItemLink icon={<Home />} label="Página Inicial" />

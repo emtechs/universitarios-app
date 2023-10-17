@@ -3,6 +3,7 @@ import {
   iDocument,
   DialogBaseChildren,
   DialogBaseChildrenAction,
+  useAuthContext,
 } from '../../../../shared'
 import { DialogUpload } from './Upload'
 
@@ -21,38 +22,36 @@ export const DialogImage = ({
   title,
   document,
 }: iDialogImageProps) => {
+  const { userProfile } = useAuthContext()
   const [openImage, setOpenImage] = useState(false)
   const onCloseImage = () => setOpenImage((old) => !old)
 
   const dialog = useMemo(() => {
-    switch (document?.status) {
-      case 'RECEIVED':
-        return (
-          <DialogBaseChildrenAction
-            open={open}
-            onClose={onClose}
-            title={`Visualizar ${title}`}
-            description=""
-            action={onCloseImage}
-            actionTitle="Alterar"
-          >
-            <img src={document?.image.url} alt={title} />
-          </DialogBaseChildrenAction>
-        )
+    if (userProfile?.status !== 'ANALYZING' && document?.status === 'RECEIVED')
+      return (
+        <DialogBaseChildrenAction
+          open={open}
+          onClose={onClose}
+          title={`Visualizar ${title}`}
+          description=""
+          action={onCloseImage}
+          actionTitle="Alterar"
+        >
+          <img src={document?.image.url} alt={title} />
+        </DialogBaseChildrenAction>
+      )
 
-      default:
-        return (
-          <DialogBaseChildren
-            open={open}
-            onClose={onClose}
-            description=""
-            title={`Visualizar ${title}`}
-          >
-            <img src={document?.image.url} alt={title} />
-          </DialogBaseChildren>
-        )
-    }
-  }, [document, onClose, open, title])
+    return (
+      <DialogBaseChildren
+        open={open}
+        onClose={onClose}
+        description=""
+        title={`Visualizar ${title}`}
+      >
+        <img src={document?.image.url} alt={title} />
+      </DialogBaseChildren>
+    )
+  }, [document, onClose, open, title, userProfile])
 
   return (
     <>

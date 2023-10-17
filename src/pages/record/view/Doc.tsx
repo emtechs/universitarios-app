@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { Card, CardContent, Chip } from '@mui/material'
 import { PermMedia } from '@mui/icons-material'
@@ -11,6 +11,7 @@ import {
   iDocument,
   apiRecord,
   useAppThemeContext,
+  iDocumentID,
 } from '../../../shared'
 import { TabsRecordRetrievePage, DisplayImage, DocFt } from '../components'
 import dayjs from 'dayjs'
@@ -23,8 +24,7 @@ export const ViewDocRecordPage = () => {
   const { setLoading } = useAppThemeContext()
   const [ftData, setFtData] = useState<iDocument>()
   const [mtData, setMtData] = useState<iDocument>()
-  const [docFtData, setDocFtData] = useState<iDocument>()
-  const [docFtBData, setDocFtBData] = useState<iDocument>()
+  const [docIDData, setDocIDData] = useState<iDocumentID>()
   const [endData, setEndData] = useState<iDocument>()
 
   const getDocs = (id: string) => {
@@ -34,8 +34,7 @@ export const ViewDocRecordPage = () => {
       .then((res) => {
         setFtData(res.foto)
         setMtData(res.matricula)
-        setDocFtData(res.doc_ft_frente)
-        setDocFtBData(res.doc_ft_verso)
+        setDocIDData(res.doc_id)
         setEndData(res.end)
       })
       .finally(() => setLoading(false))
@@ -44,6 +43,8 @@ export const ViewDocRecordPage = () => {
   useEffect(() => {
     if (record_id) getDocs(record_id)
   }, [record_id])
+
+  if (!record_id) return <Navigate to="/" />
 
   return (
     <LayoutBasePage
@@ -62,19 +63,19 @@ export const ViewDocRecordPage = () => {
       <TabsRecordRetrievePage value={view} />
       <Card>
         <CardContent>
-          <DisplayImage category="FT" document={ftData} title="Foto" />
+          <DisplayImage record_id={record_id} document={ftData} title="Foto" />
           <DocFt
-            frente={docFtData}
-            verso={docFtBData}
+            record_id={record_id}
+            docID={docIDData}
             title="Documento de Identificação com Foto"
           />
           <DisplayImage
-            category="END"
+            record_id={record_id}
             document={endData}
             title="Comprovante de Endereço"
           />
           <DisplayImage
-            category="MAT"
+            record_id={record_id}
             document={mtData}
             title="Declaração da Instituição de Ensino ou Atestado de Matrícula"
           />

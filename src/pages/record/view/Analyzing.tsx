@@ -1,161 +1,124 @@
-import { useCallback, useEffect, useState } from 'react'
-import { FormContainer, TextFieldElement } from 'react-hook-form-mui'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Box, Button, Chip, Grid, Paper } from '@mui/material'
+import { Box, Chip, Grid, Paper, Typography } from '@mui/material'
 import { Sync } from '@mui/icons-material'
-import { useNavigate } from 'react-router-dom'
+import { Navigate } from 'react-router-dom'
 import {
-  DialogBaseChildren,
   Footer,
-  InputFile,
   LabelRecord,
   LayoutBasePage,
   TitleBaseItemsPage,
-  apiImage,
-  apiUser,
-  avatarSchema,
-  iAvatarRequest,
-  iUserUpdateRequest,
+  apiRecord,
+  iDocument,
+  iDocumentID,
+  shiftPtBr,
   useAppThemeContext,
-  useAuthContext,
+  useStudentContext,
 } from '../../../shared'
-import dayjs from 'dayjs'
-import localizedFormat from 'dayjs/plugin/localizedFormat'
-import 'dayjs/locale/pt-br'
-dayjs.extend(localizedFormat)
+import { useState, useEffect } from 'react'
+import { DisplayImage, DocFt } from '../components'
 
 export const ViewAnalyzingRecordPage = () => {
-  const navigate = useNavigate()
-  const { handleUserProfile, userProfile } = useAuthContext()
-  const { setLoading, handleSucess, handleError } = useAppThemeContext()
-  const [open, setOpen] = useState(false)
+  const { recordRetrieve } = useStudentContext()
+  const { setLoading } = useAppThemeContext()
+  const [ftData, setFtData] = useState<iDocument>()
+  const [mtData, setMtData] = useState<iDocument>()
+  const [docIDData, setDocIDData] = useState<iDocumentID>()
+  const [endData, setEndData] = useState<iDocument>()
 
-  const onClose = () => setOpen((old) => !old)
-
-  const updateUser = async (data: iUserUpdateRequest) => {
-    try {
-      setLoading(true)
-      await apiUser.updateAuth(data)
-      handleSucess('Dados alterado com sucesso')
-      getUser()
-      navigate('/')
-    } catch {
-      handleError('Não foi possível atualizar os dados no momento!')
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const updateImage = async (data: iAvatarRequest) => {
-    try {
-      onClose()
-      setLoading(true)
-      const dataImage = new FormData()
-      if (data.avatar) dataImage.append('image', data.avatar)
-      await apiImage.createUser(dataImage)
-      handleSucess('Foto alterada com sucesso')
-      getUser()
-    } catch {
-      handleError('Não foi possível atualizar a foto no momento!')
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const getUser = useCallback(() => {
+  const getDocs = (id: string) => {
     setLoading(true)
-    apiUser
-      .page('')
-      .then((res) => handleUserProfile(res.user))
+    apiRecord
+      .documents(id)
+      .then((res) => {
+        setFtData(res.foto)
+        setMtData(res.matricula)
+        setDocIDData(res.doc_id)
+        setEndData(res.end)
+      })
       .finally(() => setLoading(false))
-  }, [])
+  }
 
-  useEffect(() => getUser(), [])
+  useEffect(() => {
+    if (recordRetrieve?.key) getDocs(recordRetrieve.key)
+  }, [recordRetrieve])
+
+  if (!recordRetrieve) return <Navigate to="/" />
+
+  const getData = () => getDocs(recordRetrieve.key)
 
   return (
-    <>
-      <LayoutBasePage
-        title={
-          <TitleBaseItemsPage>
-            <LabelRecord clickable />
-            <Chip
-              color="primary"
-              label="Analizar"
-              icon={<Sync sx={{ mr: 0.5 }} fontSize="inherit" />}
+    <LayoutBasePage
+      title={
+        <TitleBaseItemsPage>
+          <LabelRecord clickable />
+          <Chip
+            color="primary"
+            label="Analizar"
+            icon={<Sync sx={{ mr: 0.5 }} fontSize="inherit" />}
+          />
+        </TitleBaseItemsPage>
+      }
+    >
+      <Box
+        m={2}
+        display="flex"
+        flexDirection="column"
+        component={Paper}
+        variant="outlined"
+      >
+        <Grid
+          container
+          direction="row"
+          p={2}
+          spacing={2}
+          justifyContent="center"
+        >
+          <Grid item xs={12}>
+            <Typography textAlign="center">
+              {recordRetrieve.user.name.toUpperCase()} -{' '}
+              {recordRetrieve.user.cpf} - {recordRetrieve.school.name} -{' '}
+              {recordRetrieve.course} - {recordRetrieve.semester}/
+              {recordRetrieve.total} - {shiftPtBr(recordRetrieve.shift)}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <DisplayImage
+              record_id={recordRetrieve.key}
+              document={ftData}
+              title="Foto"
+              is_analyzing
+              getData={getData}
             />
-          </TitleBaseItemsPage>
-        }
-      >
-        <FormContainer
-          values={{
-            name: userProfile?.name || '',
-            email: userProfile?.email || '',
-          }}
-          onSuccess={updateUser}
-          // resolver={zodResolver(userUpdateSchema)}
-        >
-          <Box
-            m={2}
-            display="flex"
-            flexDirection="column"
-            component={Paper}
-            variant="outlined"
-          >
-            <Grid
-              container
-              direction="row"
-              p={2}
-              spacing={2}
-              justifyContent="center"
-            >
-              <Grid item xs={5}>
-                <TextFieldElement
-                  name="name"
-                  label="Nome completo"
-                  required
-                  fullWidth
-                />
-              </Grid>
-              <Grid item xs={5}>
-                <TextFieldElement
-                  name="email"
-                  label="Email"
-                  required
-                  fullWidth
-                />
-              </Grid>
-
-              <Button variant="contained" type="submit" fullWidth>
-                Enviar
-              </Button>
-            </Grid>
-          </Box>
-        </FormContainer>
-        <Footer />
-      </LayoutBasePage>
-      <DialogBaseChildren
-        open={open}
-        onClose={onClose}
-        description=""
-        title="Alterar Foto de Perfil"
-      >
-        <FormContainer
-          onSuccess={updateImage}
-          resolver={zodResolver(avatarSchema)}
-        >
-          <Box
-            display="flex"
-            gap={2}
-            justifyContent="center"
-            alignItems="center"
-          >
-            <InputFile label="Foto de Perfil" />
-            <Button variant="contained" type="submit">
-              Salvar
-            </Button>
-          </Box>
-        </FormContainer>
-      </DialogBaseChildren>
-    </>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <DocFt
+              record_id={recordRetrieve.key}
+              docID={docIDData}
+              title="Documento de Identificação com Foto"
+              is_analyzing
+              getData={getData}
+            />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <DisplayImage
+              record_id={recordRetrieve.key}
+              document={endData}
+              title="Comprovante de Endereço"
+              is_analyzing
+              getData={getData}
+            />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <DisplayImage
+              record_id={recordRetrieve.key}
+              document={mtData}
+              title="Declaração da Instituição de Ensino ou Atestado de Matrícula"
+              is_analyzing
+              getData={getData}
+            />
+          </Grid>
+        </Grid>
+      </Box>
+      <Footer />
+    </LayoutBasePage>
   )
 }
