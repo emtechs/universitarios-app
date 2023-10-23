@@ -1,15 +1,15 @@
 import {
   AccountBox,
-  Checklist,
+  DirectionsBus,
   FolderShared,
-  Groups,
   Home,
   LibraryAddCheck,
   People,
+  Place,
+  Route,
   Rule,
   School,
   Today,
-  Workspaces,
 } from '@mui/icons-material'
 import { Badge } from '@mui/material'
 import { useAuthContext, useDrawerContext } from '../../../../shared'
@@ -51,13 +51,9 @@ export const OptionsAdmin = () => {
         to="record"
       />
       <OtherListItemLink icon={<School />} label="Instituições" to="school" />
-      <OtherListItemLink icon={<Workspaces />} label="Turmas" to="class" />
-      <OtherListItemLink icon={<Groups />} label="Alunos" to="student" />
-      <OtherListItemLink
-        icon={<Checklist />}
-        label="Frequências"
-        to="frequency"
-      />
+      <OtherListItemLink icon={<DirectionsBus />} label="Ônibus" to="bus" />
+      <OtherListItemLink icon={<Route />} label="Rotas" to="route" />
+      <OtherListItemLink icon={<Place />} label="Paradas" to="place" />
       <OtherListItemLink icon={<Today />} label="Período" to="period" />
       <ListItemLinkOpen
         onClick={handleClickProfile}

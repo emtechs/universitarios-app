@@ -9,9 +9,7 @@ import {
   ListItemText,
   Typography,
 } from '@mui/material'
-import { Dashboard, FirstPage, Logout } from '@mui/icons-material'
-import { useMemo } from 'react'
-import { Link } from 'react-router-dom'
+import { Logout } from '@mui/icons-material'
 import {
   useAppThemeContext,
   useDrawerContext,
@@ -22,45 +20,12 @@ import { Options } from './options'
 
 export const MenuDrawer = () => {
   const { theme, smDown } = useAppThemeContext()
-  const { isDrawerOpen, toggleDrawerOpen, handleClick, displayDash } =
-    useDrawerContext()
+  const { isDrawerOpen, toggleDrawerOpen } = useDrawerContext()
   const { userProfile, logout } = useAuthContext()
   const user = {
     name: adaptName(userProfile?.name),
     src: userProfile?.profile?.url,
   }
-
-  const listButton = useMemo(() => {
-    if (userProfile?.role === 'ADMIN') {
-      if (displayDash === 'ADMIN')
-        return (
-          <ListItemButton component={Link} to="/dash" onClick={handleClick}>
-            <ListItemIcon>
-              <Dashboard />
-            </ListItemIcon>
-            <ListItemText primary="Painel Escola" />
-          </ListItemButton>
-        )
-
-      return (
-        <ListItemButton component={Link} to="/dash" onClick={handleClick}>
-          <ListItemIcon>
-            <FirstPage />
-          </ListItemIcon>
-          <ListItemText primary="Voltar" />
-        </ListItemButton>
-      )
-    }
-
-    return (
-      <ListItemButton component={Link} to="/" onClick={handleClick}>
-        <ListItemIcon>
-          <FirstPage />
-        </ListItemIcon>
-        <ListItemText primary="Voltar" />
-      </ListItemButton>
-    )
-  }, [displayDash, handleClick])
 
   return (
     <Drawer
@@ -111,7 +76,6 @@ export const MenuDrawer = () => {
         </Box>
         <Box>
           <List component="nav">
-            {listButton}
             <ListItemButton onClick={logout}>
               <ListItemIcon>
                 <Logout />

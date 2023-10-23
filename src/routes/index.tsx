@@ -1,26 +1,20 @@
 import { Navigate, Route, Routes } from 'react-router-dom'
 import {
-  ClassPage,
   DisplayRecordPage,
   EditPasswordPage,
   EditProfilePage,
-  FrequencyPage,
   HomeAuthPage,
   LoginPage,
   PasswordPage,
   PeriodPage,
   RecordPage,
   RegisterPage,
-  RequestPage,
-  RetrieveClassPage,
   RetrievePeriodPage,
   RetrieveRecordPage,
   RetrieveSchoolPage,
   RetrieveUserPage,
   SchoolPage,
-  StudentPage,
   UserPage,
-  ViewClassPage,
   ViewSchoolPage,
   ViewUserPage,
 } from '../pages'
@@ -45,17 +39,6 @@ const AppRoutes = () => {
               <Route path=":view" element={<ViewSchoolPage />} />
             </Route>
           </Route>
-          <Route path="/class" element={<ClassPage />}>
-            <Route path=":class_id" element={<RetrieveClassPage />}>
-              <Route path=":view" element={<ViewClassPage />} />
-            </Route>
-          </Route>
-          <Route path="/student" element={<StudentPage />}>
-            <Route path=":student_id" element={<RetrieveSchoolPage />}>
-              <Route path=":view" element={<ViewSchoolPage />} />
-            </Route>
-          </Route>
-          <Route path="/frequency" element={<FrequencyPage />} />
           <Route path="/period" element={<PeriodPage />}>
             <Route path=":year_id" element={<RetrievePeriodPage />} />
           </Route>
@@ -64,7 +47,6 @@ const AppRoutes = () => {
               <Route path=":view" element={<DisplayRecordPage />} />
             </Route>
           </Route>
-          <Route path="/request" element={<RequestPage />} />
         </Route>
         <Route path="/profile/edit" element={<EditProfilePage />}>
           <Route path=":view" element={<EditPasswordPage />} />
