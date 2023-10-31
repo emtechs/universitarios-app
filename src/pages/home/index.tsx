@@ -1,6 +1,15 @@
 import { Navigate } from 'react-router-dom'
 import { useAuthContext } from '../../shared'
-import { HomePageAdmin, Base, Documents, Data, User, Result } from './view'
+import {
+  HomePageAdmin,
+  Base,
+  Documents,
+  Data,
+  User,
+  Result,
+  Line,
+  LineBack,
+} from './view'
 import { useMemo } from 'react'
 
 export const HomePage = () => {
@@ -22,6 +31,16 @@ export const HomePage = () => {
         </>
       )
     }
+
+    if (userProfile.status === 'CONFIRMED')
+      return (
+        <>
+          <Line />
+          <LineBack />
+          <User />
+          <Result />
+        </>
+      )
 
     return (
       <>

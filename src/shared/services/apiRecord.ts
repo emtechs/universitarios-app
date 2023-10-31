@@ -3,6 +3,8 @@ import {
   iAction,
   iDocument,
   iDocumentID,
+  iLine,
+  iLineRequest,
   iRecord,
   iStatus,
 } from '../interfaces'
@@ -43,6 +45,34 @@ interface iPendingReturn {
 const pending = async (record_id: string): Promise<iPendingReturn> => {
   const { data: response } = await apiUsingNow.get<iPendingReturn>(
     `records/${record_id}/pending`,
+  )
+  return response
+}
+
+const createLine = async (
+  record_id: string,
+  data: iLineRequest,
+): Promise<iPendingReturn> => {
+  const { data: response } = await apiUsingNow.post<iPendingReturn>(
+    `records/${record_id}/line`,
+    data,
+  )
+  return response
+}
+
+const deleteLine = async (
+  record_id: string,
+  line_id: string,
+): Promise<iPendingReturn> => {
+  const { data: response } = await apiUsingNow.delete<iPendingReturn>(
+    `records/${record_id}/line/${line_id}`,
+  )
+  return response
+}
+
+const line = async (record_id: string, query: string): Promise<iLine> => {
+  const { data: response } = await apiUsingNow.get<iLine>(
+    `records/${record_id}/line${query}`,
   )
   return response
 }
@@ -92,4 +122,7 @@ export const apiRecord = {
   retrieve,
   documents,
   pending,
+  line,
+  createLine,
+  deleteLine,
 }
